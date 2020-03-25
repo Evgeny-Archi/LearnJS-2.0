@@ -137,6 +137,7 @@ function init() {
     constructor(section) {
       this.galeryWrap = document.querySelector(section);
       this.galeryItems = this.galeryWrap.querySelectorAll('.section-content__item'); 
+      
     }
 
     listener() {
@@ -148,9 +149,11 @@ function init() {
       })
     }
 
-    modal(item) {
-      console.log(item);
+    createModal(item) {
+      const modal = document.createElement('.div');
+
     }
+
   }
 
   const galeryInit = new Galery('.work-modal');
