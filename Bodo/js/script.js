@@ -136,22 +136,38 @@ function init() {
   class Galery {
     constructor(section) {
       this.galeryWrap = document.querySelector(section);
-      this.galeryItems = this.galeryWrap.querySelectorAll('.section-content__item'); 
-      
+      this.galeryItems = this.galeryWrap.querySelectorAll('.section-content__item');       
     }
 
     listener() {
       this.galeryItems.forEach(item => {
         item.addEventListener('click', () => {
           event.preventDefault();
-          this.modal(item);
+          this.createModal(item);
         })
       })
     }
 
     createModal(item) {
-      const modal = document.createElement('.div');
-
+      const modal = document.createElement('div');
+      modal.classList.add('modal');
+      modal.insertAdjacentHTML('afterbegin', 
+        `<div class="modal-wrap">
+              <div class="modal__content">
+                  <img src="${item.href}" alt="" class="modal__img">
+                  <button class="modal__close-button"><i class="material-icons">clear</i></button>
+                  <span class="modal__bottom">1 of 6</span>
+              </div>
+              <div class="modal__button left-button">
+                  <span></span>
+              </div>
+              <div class="modal__button right-button">
+                  <span></span>
+              </div>
+          </div>`
+      )
+      document.body.append(modal);
+      document.body.classList.add('modal-on');
     }
 
   }
