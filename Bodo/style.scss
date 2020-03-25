@@ -1,0 +1,270 @@
+@import 'mixin.scss';
+
+body {
+    font-family: $mainFont;
+    font-size: 14px;
+    color: $mainColor;
+    box-sizing: border-box;
+}
+h1 {
+    font-family: $headerFont;
+    font-size: 2.5em;
+    font-weight: 500;
+}
+.header {
+    height: 100vh;
+    background: url(./img/bg.jpeg) center no-repeat;
+    background-position: cover;
+}
+.header-top {
+    height: 4em;
+    background: $transparent;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    border-bottom: 1px solid #ececec;
+    position: relative;
+    
+    &__logo {
+        display: inline-block;
+        img {
+            height: 3em;
+        }
+    }
+    &__btn {
+        cursor: pointer;
+        background: none;
+        border: none;
+        outline: 0;
+        span {
+            display: block;
+            width: 40px;
+            height: 1px;
+            background: #000;
+            margin-top: 7px;
+        }
+        &:hover span {
+            background: lighten(#000, 60%);
+        }
+    }
+    &__nav {
+        position: fixed;
+        transform: translateX(320px);
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background: #2f2f2f;
+        transition: transform .8s ease;
+        z-index: 1001;
+        ul {
+            list-style: none;
+            margin-top: 80px;
+            transform: translateY(500%);
+            transition: transform .8s ease;
+        }
+        .close-btn {
+            display: inline;
+            color: #a5a5a5;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+        a {
+            display: block;
+            line-height: 3em;
+            letter-spacing: .3em;
+            color: #a5a5a5;
+            text-decoration: none;
+            text-transform: uppercase;
+            &:hover {
+                color: #fff;
+            }
+            &.active {
+                color: #fff;
+                text-decoration: line-through;
+            }
+        }
+    }
+    &__title {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        text-align: center;
+        padding: 65px;
+        background: $transparent;
+        outline: 4px double $transparent;
+        outline-offset: 8px;
+    }
+    &__text {
+        width: 220px;
+        height: 1.2em;
+        font-size: 1.2em;
+        letter-spacing: 1.5px;
+        opacity: .6;
+    }
+}
+.opened {
+    transform: translateX(0);
+    ul {
+        transform: translateY(0);
+    }
+}
+.backdrop {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(#000, .8);
+    z-index: -1;
+    opacity: 0;
+    transition: all .8s ease;
+}
+.on {
+    z-index: 1001;
+    opacity: .8;
+}
+
+/* About section */
+
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &__photo {
+        min-height: 700px;
+        background: url(./img/about.jpg) center no-repeat;
+        background-size: cover;
+        flex: 0 0 50%;
+    }
+    &__info {
+        flex: 0 0 50%;
+        min-height: 700px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        &-wrap {
+            display: flex;
+            transition: transform .8s ease;
+        }
+        &-item {
+            flex: 0 0 100%;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            &_wrap {
+               width: 50%;
+            }
+        }
+        &-text {
+            font-size: 13px;
+            line-height: 2.5em;
+            letter-spacing: .5px;
+            padding-bottom: 20px;
+        }
+        &-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            &-item {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                background: lighten($mainColor, 30%);
+                border-radius: 50%;
+                margin: 0 5px;
+                &:hover {
+                    background: $mainColor;
+                }
+                &.active {
+                    background: $mainColor;
+                }
+            }
+        }
+    }
+}
+.signature {
+    margin-top: 20px;
+}
+
+/* Work section */
+.section {
+    @include section;    
+
+    &-title {
+        @include section-title;
+        &__header {
+            @include title-header;
+        }
+    }
+
+    &:hover .section-title__header:before {
+        width: 100px;
+        background: darken(#dedede, 10%);
+    }
+
+    &-content {
+        @include section-content;
+        &__item {
+            width: 50%;
+            overflow: hidden;
+            position: relative;
+            &:before {
+                content: attr(data-text);
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                font-weight: 700;
+                text-transform: uppercase;
+                color: $mainColor;
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50%);
+                transition: opacity .8s ease;
+            }
+            &:after {
+                content: "";
+                display: block;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                background: $transparent;
+                border: 20px solid rgba(210,230,220, .7);
+                position: absolute;
+                top: 0;
+                left: 0;
+                opacity: 0;
+                transition: opacity .8s ease;
+            }
+            &:hover:after {
+                opacity: 1;
+            }
+            &:hover:before {
+                opacity: 1;
+                z-index: 2;
+            }
+            &:hover .section-content__img {
+                filter: grayscale(0);
+                transform: scale(1.2);
+            }
+        }
+    }        
+    &-content__img {
+        width: 100%;
+        display: block;
+        filter: grayscale(100%);
+        transition: all .8s ease;
+        opacity: .6;
+    }
+    &-title__text {
+        margin-top: 60px;
+        line-height: 2em;
+    }        
+}
+.section-wrap {
+    @include section-wrap;
+}
+

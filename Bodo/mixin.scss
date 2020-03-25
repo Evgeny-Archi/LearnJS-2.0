@@ -1,0 +1,52 @@
+/* Variables */
+$headerFont: 'Roboto Slab', serif;
+$mainFont: 'Roboto', sans-serif;
+$headerFontSize: 1.8em;
+$blockBg: #f6f6f6;
+$mainColor: #2f2f2f;
+$transparent: rgba(#fff, .8);
+
+/* Mixins */
+@mixin section {
+    padding: 100px 0;
+    background: $blockBg;
+}
+
+@mixin section-title {
+    flex: 0 0 30%;
+    box-sizing: border-box;
+    padding-right: 60px;
+}
+
+@mixin section-content {
+    flex: 0 0 70%;
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@mixin title-header {    
+        font-family: $headerFont;
+        font-size: $headerFontSize;
+        font-weight: 500;
+        position: relative;
+        &::before {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 2px;
+            position: absolute;
+            left: 0;
+            top: 40px;
+            background: #dedede;
+            transition: all .8s ease;
+        }       
+}
+
+@mixin section-wrap {
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
