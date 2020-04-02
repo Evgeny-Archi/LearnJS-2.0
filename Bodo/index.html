@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:500|Roboto:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:500|Roboto:300,400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="shortcut icon" href="img/favicon.ico">
     <link rel="stylesheet" href="css/normalize.css">
@@ -14,7 +14,8 @@
     
 <div class="backdrop"></div>
 
-<header class="header" id="top">
+<section id="top">
+<header class="header">
     <div class="header-top">
         <a href="#" class="header-top__logo"><img src="img/logo.png" alt="Bodo"></a>
         <div class="header-top__menu">
@@ -26,10 +27,12 @@
             <nav class="header-top__nav">
                 <a class="close-btn"><i class="material-icons">clear</i></a>
                 <ul>
-                    <li><a href="#top" class="active">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#work">Work</a></li>
-                    <li><a href="">Skills</a></li>
+                    <li><a href="#top" class="header-top__item active">Home</a></li>
+                    <li><a href="#about" class="header-top__item">About</a></li>
+                    <li><a href="#work" class="header-top__item">Work</a></li>
+                    <li><a href="#services" class="header-top__item">Services</a></li>
+                    <li><a href="#employement" class="header-top__item">Employement</a></li>
+                    <li><a href="#skills" class="header-top__item">Skills</a></li>
                 </ul>
             </nav>
         </div>
@@ -40,6 +43,7 @@
         <p class="header-top__text"></p>
     </div>
 </header>
+</section>
 
 <section class="about" id="about">
     <div class="about__photo"></div>
@@ -88,23 +92,117 @@
             <a href="img/bw-6.png" class="section-content__item" data-text="Pineapple"><img src="img/bw-6.png" alt="" class="section-content__img"></a>         
         </div>
     </div>
+</section>
 
-    <!--<div class="modal">
-        <div class="modal-wrap">
-            <div class="modal__content">
-                <img src="img/bw-1.png" alt="" class="modal__img">
-                <button class="modal__close-button"><i class="material-icons">clear</i></button>
-                <span class="modal__bottom">1 of 6</span>
+<section class="section no-bg" id="services">
+    <div class="section-wrap">
+        <div class="section-title">
+            <h2 class="section-title__header">Services</h2>
+            <div class="section-title__text">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum tenetur voluptates, a ratione similique deleniti quia et laborum iure corrupti, doloremque molestiae   quasi     magnam assumenda accusamus id maxime perferendis laboriosam!</p>
+                </div>
+        </div>
+        <div class="section-content">
+            <article class="section-content__article">
+                <span class="material-icons article-icon">launch</span>
+                <h3 class="h3">Marketing</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+            <article class="section-content__article">
+                <span class="material-icons article-icon">picture_in_picture</span>
+                <h3 class="h3">Web Design</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+            <article class="section-content__article">
+                <span class="material-icons article-icon">dashboard</span>
+                <h3 class="h3">UI / UX</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+            <article class="section-content__article">
+                <span class="material-icons article-icon">remove_from_queue</span>
+                <h3 class="h3">Frontend</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+            <article class="section-content__article">
+                <span class="material-icons article-icon">folder_open</span>
+                <h3 class="h3">Backend</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+            <article class="section-content__article">
+                <span class="material-icons article-icon">laptop_mac</span>
+                <h3 class="h3">Development</h3>
+                <p class="section-content__text">Typi non habent claritatem insitam est usus legentis in iis qui facit eorum claritatem.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="employement">
+    <div class="section-wrap">
+        <div class="section-title">
+            <h2 class="section-title__header">Employement</h2>
+            <div class="section-title__text">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum tenetur voluptates, a ratione similique deleniti quia et laborum iure corrupti, doloremque molestiae   quasi magnam assumenda accusamus id maxime perferendis laboriosam!</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam quo aliquam repellendus alias rerum, quaerat sint ratione cum? Sapiente atque illum accusamus alias    unde ipsum nisi distinctio, vitae mollitia impedit.</p>
+            </div>            
+        </div>
+        <div class="section-content employ">
+            <div class="employ__card">
+                <h1 class="employ__header">2007 - 2009</h1>
+                <h3 class="employ__h3">web designer</h3>
+                <span class="employ__subtitle">Corp Project</span>
+                <p class="employ__text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetlectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanita per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes.</p>
+                <span class="border border_top"></span>
+                <span class="border border_right"></span>
+                <span class="border border_bottom"></span>
+                <span class="border border_left"></span>
             </div>
-            <div class="modal__button left-button">
-                <span></span>
+            <div class="employ__card">
+                <h1 class="employ__header">2007 - 2009</h1>
+                <h3 class="employ__h3">web designer</h3>
+                <span class="employ__subtitle">Corp Project</span>
+                <p class="employ__text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetlectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanita per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes.</p>
+                <span class="border border_top"></span>
+                <span class="border border_right"></span>
+                <span class="border border_bottom"></span>
+                <span class="border border_left"></span>
             </div>
-            <div class="modal__button right-button">
-                <span></span>
+            <div class="employ__card">
+                <h1 class="employ__header">2007 - 2009</h1>
+                <h3 class="employ__h3">web designer</h3>
+                <span class="employ__subtitle">Corp Project</span>
+                <p class="employ__text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetlectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanita per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes.</p>
+                <span class="border border_top"></span>
+                <span class="border border_right"></span>
+                <span class="border border_bottom"></span>
+                <span class="border border_left"></span>
+            </div>
+            <div class="employ__card">
+                <h1 class="employ__header">2007 - 2009</h1>
+                <h3 class="employ__h3">web designer</h3>
+                <span class="employ__subtitle">Corp Project</span>
+                <p class="employ__text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetlectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanita per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes.</p>
+                <span class="border border_top"></span>
+                <span class="border border_right"></span>
+                <span class="border border_bottom"></span>
+                <span class="border border_left"></span>
             </div>
         </div>
-    </div>-->
+    </div>
+</section>
 
+<section class="section no-bg" id="skills">
+    <div class="section-wrap">
+        <div class="section-title">
+            <h2 class="section-title__header">Skills</h2>
+            <div class="section-title__text">
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum tenetur voluptates, a ratione similique deleniti quia et laborum iure corrupti, doloremque molestiae   quasi     magnam assumenda accusamus id maxime perferendis laboriosam!</p>                
+            </div>
+        </div>
+        <div class="section-content">
+                   
+        </div>
+    </div>
 </section>
 
 

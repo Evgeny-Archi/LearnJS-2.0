@@ -1,13 +1,80 @@
 window.onload = init();
+// console.log(document.documentElement.offsetHeight);
+// console.log(document.documentElement.scrollTop);
+// console.log(window.pageYOffset);
+
 
 function init() {
   
   // данные навигации
-  const openNavBtn = document.querySelector(".header-top__btn");
-  const nav = document.querySelector(".header-top__nav");
+  const openNavBtn = document.querySelector(".header-top__btn");  
   const closeNavBtn = document.querySelector(".close-btn");
   const backdrop = document.querySelector(".backdrop");
+  const nav = document.querySelector(".header-top__nav");
+  const navItems = nav.querySelectorAll('.header-top__item');
+  const sections = document.querySelectorAll('section');
+
+//   window.addEventListener('scroll', () => {	  
+// 	  if (window.pageYOffset >= aboutSection.offsetTop) {
+// 		// console.log(window.pageYOffset);
+// 		// console.log(aboutSection.offsetTop);
+// 		navItem.forEach((item) => {
+// 			if (item.classList.contains('active')) {
+// 				item.classList.remove('active');
+// 			}
+// 		})		
+// 		navItem[1].classList.add('active');
+// 	  }
+//   })
+
+	const getNavigationId = (sections) => {
+		const sectionsId = {};
+
+		sections.forEach((item, index) => {
+			index = (item.offsetTop);
+			sectionsId[index] = item.id;						
+		});
+
+		return sectionsId;
+	};	
+
+	const setScrollFun = (sectionsId, navItems) => {
+		
+		window.addEventListener('scroll', (e) => {
+
+			if (window.pageYOffset < 500) {
+				navItems.forEach(item => {
+					if (item.classList.contains('active')) {
+						item.classList.remove('active');						
+					}
+				});
+				navItems[0].classList.add('active');
+			} else {
+				for (let key in sectionsId) {
+					if (window.pageYOffset >= key - 200) {
+						navItems.forEach(item => {								
+							if(item.href.includes(sectionsId[key]) && !item.classList.contains('active')) {		
+								item.classList.add('active');
+							} else if (item.classList.contains('active') && !item.href.includes(sectionsId[key])) {
+								item.classList.remove('active');
+							}
+						})
+					}
+				}
+			}
+
+		})
+
+	}
+
+	const listenerScrollForMenu = () => {
+		const sectionsId = getNavigationId(sections);
+		setScrollFun(sectionsId, navItems);
+	};
+
+	listenerScrollForMenu();
   
+
   // Закрытие меню при нажатии на крестик или свободную область
   function closeSideMenu() {
     if (nav.classList.contains("opened")) {
@@ -15,6 +82,15 @@ function init() {
       backdrop.classList.remove("on");
     }
   }
+
+  openNavBtn.onclick = () => {
+    nav.classList.add("opened");
+    document.querySelector(".backdrop").classList.add("on");
+  };
+
+  // Закрытие меню при нажатии на крест или свободную область
+  backdrop.onclick = closeSideMenu;
+  closeNavBtn.onclick = closeSideMenu;
 
   // Эффект печатной машинки в заголовке
   function typed() {
@@ -49,16 +125,7 @@ function init() {
     }
     type();
   }
-  typed();
-
-  openNavBtn.onclick = () => {
-    nav.classList.add("opened");
-    document.querySelector(".backdrop").classList.add("on");
-  };
-
-  // Закрытие меню при нажатии на крест или свободную область
-  backdrop.onclick = closeSideMenu;
-  closeNavBtn.onclick = closeSideMenu;
+  typed();  
 
   // Слайдер
   const sliderInit = (function() {
@@ -136,27 +203,48 @@ function init() {
   class Galery {
     constructor(section) {
       this.galeryWrap = document.querySelector(section);
-      this.galeryItems = this.galeryWrap.querySelectorAll('.section-content__item');       
+      this.galeryItems = this.galeryWrap.querySelectorAll('.section-content__item');    
     }
 
     listener() {
-      this.galeryItems.forEach(item => {
-        item.addEventListener('click', () => {
+      this.galeryItems.forEach((item, index) => {
+        item.addEventListener('click', (event) => {
           event.preventDefault();
-          this.createModal(item);
+          this.createModal(item, index);
         })
-      })
+      });
     }
 
-    createModal(item) {
+    getNextLink(index) {
+      let image;
+      this.galeryItems.forEach((item, i) => {
+        if (i === index + 1) {
+          image = item.href;
+        };
+      });
+      return image;      
+    }
+
+    getCurrentImg(item) {
+      
+      if (item.tagName) {
+        return item.href;
+      } 
+      console.log(item);
+      //return this.createModal(item);
+     
+    }
+
+    createModal(item, index) {
       const modal = document.createElement('div');
       modal.classList.add('modal');
-      modal.insertAdjacentHTML('afterbegin', 
+      let currentImg = this.getCurrentImg(item);
+      modal.insertAdjacentHTML('afterbegin',
         `<div class="modal-wrap">
               <div class="modal__content">
-                  <img src="${item.href}" alt="" class="modal__img">
+                  <a href="${this.getNextLink(index)}" id="modal_next-img"><img src="${currentImg}" alt="" class="modal__img"></a>
                   <button class="modal__close-button"><i class="material-icons">clear</i></button>
-                  <span class="modal__bottom">1 of 6</span>
+                  <span class="modal__bottom">${index + 1} of ${this.galeryItems.length}</span>
               </div>
               <div class="modal__button left-button">
                   <span></span>
@@ -165,9 +253,32 @@ function init() {
                   <span></span>
               </div>
           </div>`
-      )
+      );
       document.body.append(modal);
       document.body.classList.add('modal-on');
+
+      const nextImg = document.getElementById('modal_next-img');
+      nextImg.addEventListener('click', (event) => {
+        event.preventDefault();
+        const nextImg = this.getNextLink(index);
+        this.getCurrentImg(nextImg);
+      })
+
+      const modalCloseButton = document.querySelector('.modal__close-button').firstChild;
+      const modalWrap = document.querySelector('.modal-wrap');
+      
+      modalWrap.addEventListener('click', (event) => {
+        this.closeModal(modal, event, modalWrap, modalCloseButton);
+       });
+
+    }
+
+    closeModal(modal, event, ...args) {      
+      if (args.includes(event.target)) {
+        modal.remove();
+        document.body.classList.remove('modal-on');
+        backdrop.classList.remove("on");       
+      }
     }
 
   }
