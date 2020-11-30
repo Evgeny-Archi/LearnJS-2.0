@@ -6,7 +6,7 @@ module.exports = {
 
     output: {
         path: path.resolve(__dirname, 'public/js'),
-        filename: 'app.js',
+        filename: 'array.js',
         publicPath: '/js'
     },
 
