@@ -23,7 +23,7 @@ let btn = document.querySelector('.btn'),
 
 btn.addEventListener('click', animate);
 
-// Получаем ширину и высоту элементов (квадратика и области, по которой он будет двигаться)
+// Получаем ширину и высоту элементов (кубика и области, по которой он будет двигаться)
 let itemProp = function(item) {
     return {
         width: parseInt(window.getComputedStyle(item).getPropertyValue("width")),
@@ -40,16 +40,13 @@ function animate() {
     let id = setInterval(frame, 10);
 
     function frame() {
-        // Если позиция будет равна границе области - прерываем анимацию
+        // Если позиция будет равна границе области (с учетом пропорций) - прерываем анимацию
         if ((wrapProp.width - boxProp.width) - 1 === pos || (wrapProp.height - boxProp.height) - 1 === pos) {
-            pos--;
-            box.style.top = pos + 'px';
-            box.style.left = pos + 'px'
             clearInterval(id);
         } else {
             pos++;
             box.style.top = pos + 'px';
-            box.style.left = pos + 'px'
+            box.style.left = pos + 'px';
         }
     }
 }
