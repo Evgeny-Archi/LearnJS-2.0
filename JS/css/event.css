@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+}
+.table {
+    margin: 40px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.td {
+    width: 33.3%;
+    height: 100px;
+    border: 1px solid #ccc;
+    background: #fafafa;
+    text-align: center;
+    line-height: 100px;
+}
+.active {
+    background: #fff;
+    color: blue;
+}
