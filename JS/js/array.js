@@ -33,4 +33,44 @@ function compareNum(a, b) {
     return a - b;
 }
 
+// Получение чисел от пользователя пока не будет введена строка или отмена. Их добавление в массив и суммирование.
+function sumInput() {
+    let arr = [];
+    while(true) {
+        let input = prompt('Input some number', '');
+        if (input == '' || input == null || !isFinite(input)) break;
+        arr.push(+input);
+    }
+    let sum = 0;
+    for(let i of arr) {
+        sum += i;
+    }
+    return sum;
+}
+console.log(sumInput());
+
+// Массив наоборот.
+let arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+let inverse = [];
+// Вариант 1. Добавление в конец нового массива.
+for (let i = arr.length - 1; i >= 0; i--) {
+    inverse.push(arr[i])
+}
+// Вариант 2. Добавление в начало нового массива
+arr.forEach(function(item, index) {
+    inverse.unshift(arr[index]);
+})
+// Вариант 3. Тоже что и второй вариант
+for(let key of arr) {
+    inverse.unshift(key);
+}
+// Вариант 4. Без использования методов массива.
+let j = 0;
+for (let i = arr.length - 1; i >= 0; i--) {
+    inverse[j] = arr[i];
+    j++;
+}
+// Вариант 5. Метод reverse()
+arr.reverse();
+
 
