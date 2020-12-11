@@ -73,4 +73,76 @@ for (let i = arr.length - 1; i >= 0; i--) {
 // Вариант 5. Метод reverse()
 arr.reverse();
 
+/* Алгоритмы */
+// Сортировка пузырьком с проверкой был ли отсортирован ранее.
+let arr = [6, 1, -4, 10, 3, -5];
+const bubbleSort = (arr) => {
+    for (let i = 0; i < arr.length - 1; i++) {
+        let wasSwap = false;
+        for (let j = 0; j < arr.length - i; j++) {
+            if (arr[j] > arr[j + 1]) {
+                [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]; // аналогично arr[j] = arr[j + 1]; arr[j + 1] = swap, где swap = arr[j]
+                wasSwap = true
+            }
+        }
+        if (!wasSwap) break;
+    }
+    console.log(arr);
+}
+bubbleSort(arr);
+
+// Шейкерная сортировка
+let arr = [6, 1, -4, 10, 3, -5];
+const swap = (arr, i, j) => {
+    let swap = arr[i];
+    arr[i] = arr[j];
+    arr[j] = swap;
+}
+
+const shakerSort = (arr) => {
+    let left = 0,
+        right = arr.length - 1;
+
+    while(left < right) {
+        for (let i = left; i < right; i++) {
+            if (arr[i] > arr[i + 1]) {
+                swap(arr, i, i + 1);
+            }
+        }
+        right--;
+
+        for (let i = right; i > left; i--) {
+            if (arr[i] < arr[i - 1]) {
+                swap(arr, i, i - 1);
+            }
+        }
+
+        left++;
+    }
+
+    console.log(arr);
+}
+shakerSort(arr);
+
+// Разделение массива пополам и возвращение его в обратном порядке. Попытка создания алгоритма сортировки слиянием
+let arr = [1,2,3,4,5, 6];
+function merge(arrLeft, arrRight) {
+    arr = arrRight.concat(arrLeft);
+    // arr = [...arrRight, ...arrLeft]; // Аналогично выше.
+    console.log(arr);
+}
+function sort(arr) {
+    if (!arr || !arr.length) {
+        return null;
+    }
+    if(arr.length <= 1) {
+        return arr;
+    }
+    let middle = Math.floor(arr.length / 2);
+    let arrLeft = arr.slice(0, middle);
+    let arrRight = arr.slice(middle);
+    return merge(arrLeft, arrRight);
+}
+sort(arr)
+
 
