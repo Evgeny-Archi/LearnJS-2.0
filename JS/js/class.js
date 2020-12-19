@@ -70,3 +70,65 @@ window.addEventListener('DOMContentLoaded', () => {
     })
 })
 
+// Создание вложенного списка из объекта
+let data = {
+    "Рыбы": {
+        "форель": {},
+        "лосось": {}
+    },
+
+    "Деревья": {
+        "Огромные": {
+            "секвойя": {},
+            "дуб": {}
+        },
+        "Цветковые": {
+            "яблоня": {},
+            "магнолия": {}
+        }
+    },
+    "Животные": {
+        "Слон": {},
+        "Зебра": {},
+        "Волк": {},
+    }
+};
+
+const container = document.querySelector('.js-list');
+
+// InnerHTML
+const createTree = (container, obj) => {
+    container.innerHTML = createTreeText(obj);
+}
+const createTreeText = (obj) => {
+    let ul, li = '';
+    for (let key in obj) {
+        li += '<li>' + key + createTreeText(obj[key]) + '</li>';
+    }
+    if (li) {
+        ul = '<ul>' + li + '</ul>';
+    }
+    return ul || '';
+}
+createTree(container, data);
+
+// Методы DOM
+const createTree = (container, obj) => {
+    container.append(createDOM(obj));
+}
+const createDOM = (obj) => {
+    if(!Object.keys(obj).length) return; // Если при рекурсии объект пустой, то не создаем лишний <ul>
+    let ul = document.createElement('ul');
+    for (let key in obj) {
+        let li = document.createElement('li');
+        li.textContent = key;
+        let childrenUl = createDOM(obj[key]); // Перебираем вложенность
+        if (childrenUl) {
+            li.append(childrenUl);
+        }
+        ul.append(li);
+    }
+    return ul
+}
+createTree(container, data)
+
