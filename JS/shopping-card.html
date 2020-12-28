@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shoping Card</title>
+    <link rel="stylesheet" href="css/shopping-card.css">
+</head>
+<body>
+
+<div class="wrap js-cards">
+    <div class="row row-header">
+        <div class="cell">Название</div>
+        <div class="cell">Стоимость</div>
+        <div class="cell">Количество</div>
+        <div class="cell">Подытог</div>
+    </div>
+    <div class="row js-row-item">
+        <div class="cell">Продукт 1</div>
+        <div class="cell js-price">1 000 руб.</div>
+        <div class="cell count">
+            <button class="btn btn-minus">&ndash;</button>
+            <input type="number" value="2" data-price="1000" class="amount-input" disabled>
+            <button class="btn btn-plus">+</button>
+        </div>
+        <div class="cell js-subtotal">2 000 руб.</div>
+    </div>
+    <div class="row js-row-item">
+        <div class="cell">Продукт 2</div>
+        <div class="cell js-price">2 000 руб.</div>
+        <div class="cell count">
+            <button class="btn btn-minus">&ndash;</button>
+            <input type="number" value="3" data-price="2000" class="amount-input" disabled>
+            <button class="btn btn-plus">+</button>
+        </div>
+        <div class="cell js-subtotal">6 000 руб.</div>
+    </div>
+    <div class="row js-row-item">
+        <div class="cell">Продукт 3</div>
+        <div class="cell js-price">500 руб.</div>
+        <div class="cell count">
+            <button class="btn btn-minus">&ndash;</button>
+            <input type="number" value="2" data-price="500" class="amount-input" disabled>
+            <button class="btn btn-plus">+</button>
+        </div>
+        <div class="cell js-subtotal">1 000 руб.</div>
+    </div>
+    <div class="total-price">Итого: <span id="js-total-price"></span> руб.</div>
+</div>
+
+<script src="js/shopping-card.js"></script>
+</body>
+</html>

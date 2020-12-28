@@ -1,3 +1,4 @@
+// Практика: Модальное окно (modal.html)
 const CLASS_LIST = {
     MODAL: 'modal',
     MODAL_ACTIVE: 'modal--active',
