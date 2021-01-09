@@ -31,10 +31,5 @@ const generateGallery = () => {
   }
 
 }
-
 openMore.addEventListener('click', generateGallery)
-
 generateGallery()
-
-
-

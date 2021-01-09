@@ -1,3 +1,5 @@
+// Всякие задачки по JS
+
 // const btn = document.querySelector('button'),
 //       out = document.querySelector('.count'),
 //       text = document.querySelector('#text');
@@ -22,7 +24,6 @@
 // const total = [...document.querySelectorAll('.js-input')].reduce((accumulator, currentValue) => {
 //     return accumulator + currentValue.dataset.price * currentValue.value;
 // }, initialValue);
-
 // console.log(total)
 
 // // Деструктуризация
@@ -253,18 +254,61 @@
 // */
 // console.log(realizeDistance(1000, 300));
 
+// // Возвращает макс и мин значения и разницу между ними
+// function diffInAge(ages) {
+//     let max = 0
+//     let min = ages[0]
+//     for (let i = 0; i < ages.length; i++) {
+//         if (max < ages[i]) max = ages[i]
+//         if (min > ages[i]) min = ages[i]
+//     }
+//     return [min, max, max-min]
+// }
+// console.log(diffInAge([82, 15, 6, 38, 35])); // [6, 82, 76]
+// console.log(diffInAge([35, 15, 6, 38, 82])); // [6, 82, 76]
+// console.log(diffInAge([57, 99, 14, 32])); // [14, 99, 85]
 
+// // Возвращает эл массива, которые отличны от макс элемента не более чем на 10%
+// function func(arr) {
+//     let max = Math.max(...arr)
+//     // let sort = []
+//     // arr.map((item) => {
+//     //     if (item > (max - ((max * 10) / 100)) && item !== max) {
+//     //         sort.push(item)
+//     //     }
+//     // })
+//     // return sort
 
-function diffInAge(ages) {
-    let max = 0
-    let min = ages[0]
-    for (let i = 0; i < ages.length; i++) {
-        if (max < ages[i]) max = ages[i]
-        if (min > ages[i]) min = ages[i]
+//     return arr.filter((item) => item > (max - ((max * 10) / 100)) && item !== max)
+// }
+// console.log(func([5, 88, 95, 100, 77, 21, 92])); // [95, 92]
+// console.log(func([2, 13, 55, 29, 19, 5, -5])); // []
+
+// // Фу-ция добавляет в массив нули до размера переданного вторым аргументом
+// function fillArr(arr, len) {
+//     for (let i = 0; i <= len - arr.length; i++) {
+//         arr.push(0)
+//     }
+//     return arr
+// }
+// const arr = [2, 6, 8]
+// fillArr(arr, 5)
+// console.log(arr); // [2, 6, 8, 0, 0] - size: 5
+
+// Вщзвращает уникальные элементы массива
+function unique(arr) {
+    // return Array.from(new Set(arr))
+
+    let sort = []
+    sort.push(arr[0])
+
+    for (let i = 1; i < arr.length; i++) {
+        if (!sort.includes(arr[i])) {
+            sort.push(arr[i])
+        }
     }
-    return [min, max, max-min]
+
+    return sort
 }
 
-console.log(diffInAge([82, 15, 6, 38, 35])); // [6, 82, 76]
-console.log(diffInAge([35, 15, 6, 38, 82])); // [6, 82, 76]
-console.log(diffInAge([57, 99, 14, 32])); // [14, 99, 85]
+console.log((unique([1, 8, 1, 5, 9, 5, 8]))); // [1, 8, 5, 9]
