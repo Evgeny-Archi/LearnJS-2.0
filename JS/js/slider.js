@@ -4,19 +4,21 @@ const sliderInit = (function () {
               slider = mainSlider.querySelector('.slider__wrap'),
               images = mainSlider.querySelectorAll('.slider__item'),
               sliderControls = mainSlider.querySelectorAll('.slider-button'),
-              sliderWrapWidth = parseFloat(getComputedStyle(slider).width),
               sliderCounts = mainSlider.querySelector('.slider-counts')
         let transform = 0
         let count = 0;
 
-        const init = (sliderWrapWidth) => {
+        const init = () => {
+            sliderWrapWidth = parseFloat(getComputedStyle(slider).width)
+
             images.forEach(item => {
                 item.style.width = sliderWrapWidth + 'px'
                 item.style.height = 'auto'
             })
             sliderCounts.innerHTML = `1 / ${images.length}`
         }
-        init(sliderWrapWidth)
+        init()
+        window.addEventListener('resize', init)
 
         const getTransform = (direction) => {
             if (direction === 'left') {
