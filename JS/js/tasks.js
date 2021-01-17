@@ -295,20 +295,105 @@
 // fillArr(arr, 5)
 // console.log(arr); // [2, 6, 8, 0, 0] - size: 5
 
-// Вщзвращает уникальные элементы массива
-function unique(arr) {
-    // return Array.from(new Set(arr))
+// // Возвращает уникальные элементы массива
+// function unique(arr) {
+//     // return Array.from(new Set(arr))
 
-    let sort = []
-    sort.push(arr[0])
+//     let sort = []
+//     sort.push(arr[0])
+//     for (let i = 1; i < arr.length; i++) {
+//         if (!sort.includes(arr[i])) {
+//             sort.push(arr[i])
+//         }
+//     }
+//     return sort
+// }
+// console.log((unique([1, 8, 1, 5, 9, 5, 8]))); // [1, 8, 5, 9]
 
-    for (let i = 1; i < arr.length; i++) {
-        if (!sort.includes(arr[i])) {
-            sort.push(arr[i])
-        }
-    }
+// // Фу-ция заполняет массив 100 случайными числами от 0 до 200
+// function getRandom() {
+//     let arr = []
+//     arr.push(Math.floor(Math.random() * 200))
+//     while (arr.length < 100) {
+//         let random = Math.floor(Math.random() * 200)
+//         if (!arr.includes(random)) {
+//             arr.push(random)
+//         }
+//     }
+//     return arr.sort()
+// }
+// console.log(getRandom());
 
-    return sort
-}
+// function sum(a, b) {
+//     if (b) {
+//         return a + b
+//     }
+//     return function(c) {
+//         return a + c
+//     }
+// }
+// console.log(sum(2)(3));
 
-console.log((unique([1, 8, 1, 5, 9, 5, 8]))); // [1, 8, 5, 9]
+// Promise
+
+// let drink = 0
+// function shoot(arrow, headshot, fail) {
+//     console.log(`Вы сделали выстрел из ${arrow}...`);
+//     let promise = new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             return Math.random() > 0.5 ? resolve() : reject('Вы промахнулись')
+//         }, 2000)
+//     })
+//     return promise
+// }
+// function win() {
+//     console.log('вы победили');
+//     (drink === 1) ? buyBeer() : giveMoney()
+// }
+// function buyBeer() {
+//     console.log('Вам купили пиво');
+// }
+// function giveMoney() {
+//     console.log('Вам заплатили');
+// }
+// function loose() {
+//     console.log('вы проиграли');
+// }
+// shoot('лука')
+//     .then(() => console.log('Вы попали в цель'))
+//     .then(win)
+//     .catch(loose)
+
+// setTimeout через Promise
+// function delay(ms) {
+//     return new Promise(resolve => setTimeout(resolve, ms))
+// }
+// delay(1000).then(() => {
+//     console.log('1 sec last');
+// })
+
+// Фу-ция строит строку на основе объекта, где ключи это буквы, а значения - номер буквы в строке
+// const input = {
+//     ' ': [5],
+//     d: [10],
+//     e: [1],
+//     H: [0],
+//     l: [2, 3, 9],
+//     o: [4, 7],
+//     r: [8],
+//     w: [6]
+// }
+// const buildString = (str) => {
+//     if (typeof str !== 'object') return str
+//     let arr = []
+//     for (let key in str) {
+//         str[key].map(item => arr[item] = key)
+//     }
+//     return arr.join('')
+// }
+// console.log(buildString(input));
+// console.log(buildString('asdasd'));
+// console.log(buildString(''));
+
+
+
