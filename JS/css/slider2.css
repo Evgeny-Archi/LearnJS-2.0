@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -15,10 +16,17 @@ body {
   height: 100vh;
   position: relative;
   overflow: hidden;
+  /* Slider */
+}
+
+.header .sticky {
+  position: fixed;
+  background: rgba(27, 25, 26, 0.7);
+  padding: .8em 10em;
 }
 
 .header-top {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -33,9 +41,11 @@ body {
           align-items: center;
   padding: 1.4em 10em;
   z-index: 999;
+  /* Основная навигация */
 }
 
 .header-top__logo a {
+  display: inline-block;
   font-size: 1em;
   font-weight: bold;
   letter-spacing: .2em;
@@ -52,10 +62,9 @@ body {
 }
 
 .header-top__logo a span {
-  font-size: 2em;
+  -webkit-transform: scale(2);
+          transform: scale(2);
   display: inline-block;
-  -webkit-transform: translateY(4px);
-          transform: translateY(4px);
 }
 
 .header-top__nav {
@@ -221,7 +230,7 @@ body {
           transform: translateY(-50%);
   display: inline-block;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+  z-index: 99;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -252,7 +261,7 @@ body {
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-  z-index: 999;
+  z-index: 99;
 }
 
 .header-slider__buttons--dot {
@@ -271,11 +280,13 @@ body {
   background: #b4ad8e;
 }
 
+/* Section main */
 .main {
   height: 100vh;
   background: url(../img/slider2/bg.jpeg) center center no-repeat;
 }
 
+/* Slider animation */
 @-webkit-keyframes animate {
   from {
     -webkit-transform: scale(1);
@@ -286,7 +297,6 @@ body {
             transform: scale(1.1);
   }
 }
-
 @keyframes animate {
   from {
     -webkit-transform: scale(1);

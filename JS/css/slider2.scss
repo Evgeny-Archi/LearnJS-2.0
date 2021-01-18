@@ -19,8 +19,14 @@ body {
     position: relative;
     overflow: hidden;
 
-    &-top {
+    .sticky {
         position: fixed;
+        background: rgba($background, .7);
+        padding: .8em 10em;
+    }
+
+    &-top {
+        position: absolute;
         top: 0;
         left: 0;
         width: 100%;
@@ -31,6 +37,7 @@ body {
         z-index: 999;
 
         &__logo a {
+            display: inline-block;
             font-size: 1em;
             font-weight: bold;
             letter-spacing: .2em;
@@ -45,12 +52,11 @@ body {
             }
 
             span {
-                font-size: 2em;
+                transform: scale(2);
                 display: inline-block;
-                transform: translateY(4px);
             }
         }
-
+        /* Основная навигация */
         &__nav {
             display: flex;
             align-items: center;
@@ -102,8 +108,8 @@ body {
             }
         }
     }
-    // Slider
-
+    
+    /* Slider */
     &-slider {
         height: 100%;
         position: relative;
@@ -191,7 +197,7 @@ body {
             transform: translateY(-50%);
             display: inline-block;
             background: rgba(#000, .4);
-            z-index: 999;
+            z-index: 99;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -213,7 +219,7 @@ body {
             bottom: 40px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 999;
+            z-index: 99;
 
             &--dot {
                 display: inline-block;
@@ -234,11 +240,13 @@ body {
     }
 }
 
+/* Section main */
 .main {
     height: 100vh;
     background: url(../img/slider2/bg.jpeg) center center no-repeat;
 }
 
+/* Slider animation */
 @keyframes animate {
     from {
         transform: scale(1);
