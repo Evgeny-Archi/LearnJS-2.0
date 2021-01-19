@@ -1,30 +1,13 @@
 /* Preloader */
-
 (function preloader() {
     const preloaderId = setInterval(() => {
         
         if (document.readyState == 'complete') {
             clearInterval(preloaderId)
-            // document.body.classList.add('loaded')
             document.body.style.opacity = 1
         }
-    }, 500)
+    }, 200)
 })()
-    
-// window.onload = () => {
-//     const preloaderPromise = () => {
-//         return new Promise((resolve, reject) => {
-//             setTimeout(resolve, 1000)
-//         })
-//     }
-
-//     preloaderPromise()
-//         .then(() => {
-//             const preloader = document.querySelector('.preloader')
-//             preloader.style.opacity = '0'
-//             document.body.classList.add('loaded')
-//         })
-// }
 
 /* Sticky navigation */
 const stickyNavigation = (function(nav) {
@@ -52,16 +35,25 @@ const slider = (function(slider) {
           nextButton = mainSlider.querySelector('.header-slider__arrow--right'),
           prevButton = mainSlider.querySelector('.header-slider__arrow--left'),
           dotsWrap = mainSlider.querySelector('.header-slider__buttons'),
-          dots = dotsWrap.querySelectorAll('.header-slider__buttons--dot');
+          dots = renderDots(dotsWrap);
 
     // Системные переменные
     let slideIndex = 0, // Номер начального слайда
-        autoSlide = true, // Авто переключение слайдов
+        autoSlide = false, // Авто переключение слайдов
+        autoSlideTime = 7000, // Время переключения слайдов в авто режиме (ms)
         progressBar = autoSlide, // Строка прогресса переключения (работает, если вкл Авто переключение). Выкл - false
         scaleAnimation = true, // Анимация приближения слайда
-        scaleAnimationTimer = 7; // Продолжительность анимации
+        scaleAnimationTimer = 7; // Продолжительность анимации (s)
 
-    renderSlides(slideIndex)
+    // Проверка на наличие слайдов
+    sliderItems.length === 0 ? placeholder() : renderSlides(slideIndex)
+
+    // Запускаем авто переключение слайдов, если опция вкл
+    autoSlide ? startAutoplay(autoSlideTime) : stopAutoplay()
+
+    function placeholder() {
+        mainSlider.innerHTML = '<h1 class="header-slider__placeholder">No images</h1>'
+    }
 
     function renderSlides(n) {
         // Проверяем последний и начальный слайд для цикличного переключения
@@ -73,9 +65,9 @@ const slider = (function(slider) {
         }
 
         // Обновляем слайды и кнопки
-        sliderItems.forEach((item, index) => {
+        sliderItems.forEach((item) => {
             item.style.zIndex = 0
-            item.style.opacity = 0
+            item.style.opacity = 0 // Прозрачность нужна для плавной смены слайдов
         })
         dots.forEach(item => item.classList.remove('active'))
         if (scaleAnimation) { // Убираем анимацию увеличения слайда, если опция включена
@@ -89,6 +81,28 @@ const slider = (function(slider) {
         if (scaleAnimation) {  // Добавляем анимацию увеличения слайда, если опция включена
             sliderItemsBg[slideIndex].style.animation = `animate ${scaleAnimationTimer}s ease-in-out 0s 1 normal forwards`
         }
+    }
+
+    // Фу-ция добавления кнопок в зависимости от кол-ва слайдов на страницу и возвращает Node лист элементов
+    function renderDots(wrap) {
+        let dots = ''
+        for (let i = 0; i < sliderItems.length; i++) {
+            dots += '<a href="" class="header-slider__buttons--dot"></a>'
+        }
+        wrap.innerHTML = dots
+        return wrap.querySelectorAll('.header-slider__buttons--dot')
+    }
+
+    // Фу-ция авто переключения слайдов
+    function startAutoplay(ms) {
+        let autoSlide = setInterval(() => {
+            nextSlide(1)
+        }, ms)
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoSlide)
+        autoSlide = false
     }
  
     // Фу-ция переключения вперед - назад
