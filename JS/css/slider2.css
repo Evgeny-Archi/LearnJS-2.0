@@ -296,14 +296,25 @@ body {
   background: #b4ad8e;
 }
 
+.header-slider__progressbar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 999;
+  background: #b4ad8e;
+  opacity: .6;
+}
+
 /* Section main */
 .main {
   height: 100vh;
   background: url(../img/slider2/bg.jpeg) center center no-repeat;
 }
 
-/* Slider animation */
-@-webkit-keyframes animate {
+/* Slider scale bg image animation */
+@-webkit-keyframes animateScale {
   from {
     -webkit-transform: scale(1);
             transform: scale(1);
@@ -313,7 +324,7 @@ body {
             transform: scale(1.1);
   }
 }
-@keyframes animate {
+@keyframes animateScale {
   from {
     -webkit-transform: scale(1);
             transform: scale(1);
@@ -321,6 +332,24 @@ body {
   to {
     -webkit-transform: scale(1.1);
             transform: scale(1.1);
+  }
+}
+
+/* Progress bar animation */
+@-webkit-keyframes animate-progress-bar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+@keyframes animate-progress-bar {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
   }
 }
 /*# sourceMappingURL=slider2.css.map */
