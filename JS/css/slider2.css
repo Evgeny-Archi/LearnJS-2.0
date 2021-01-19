@@ -10,6 +10,7 @@ body {
   font-size: 14px;
   background: #1b191a;
   color: #fff;
+  opacity: 0;
   -webkit-transition: opacity .3s ease;
   transition: opacity .3s ease;
 }

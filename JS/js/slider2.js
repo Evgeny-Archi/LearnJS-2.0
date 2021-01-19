@@ -1,7 +1,6 @@
 /* Preloader */
 
 (function preloader() {
-    document.body.style.opacity = 0
     const preloaderId = setInterval(() => {
         
         if (document.readyState == 'complete') {
