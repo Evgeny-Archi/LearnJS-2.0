@@ -1,3 +1,32 @@
+/* Preloader */
+
+(function preloader() {
+    document.body.style.opacity = 0
+    const preloaderId = setInterval(() => {
+        
+        if (document.readyState == 'complete') {
+            clearInterval(preloaderId)
+            // document.body.classList.add('loaded')
+            document.body.style.opacity = 1
+        }
+    }, 500)
+})()
+    
+// window.onload = () => {
+//     const preloaderPromise = () => {
+//         return new Promise((resolve, reject) => {
+//             setTimeout(resolve, 1000)
+//         })
+//     }
+
+//     preloaderPromise()
+//         .then(() => {
+//             const preloader = document.querySelector('.preloader')
+//             preloader.style.opacity = '0'
+//             document.body.classList.add('loaded')
+//         })
+// }
+
 /* Sticky navigation */
 const stickyNavigation = (function(nav) {
     const navBar = document.querySelector(nav)
@@ -27,7 +56,7 @@ const slider = (function(slider) {
           dots = dotsWrap.querySelectorAll('.header-slider__buttons--dot');
 
     // Системные переменные
-    let slideIndex = 1, // Номер начального слайда
+    let slideIndex = 0, // Номер начального слайда
         autoSlide = true, // Авто переключение слайдов
         progressBar = autoSlide, // Строка прогресса переключения (работает, если вкл Авто переключение). Выкл - false
         scaleAnimation = true, // Анимация приближения слайда
@@ -37,31 +66,36 @@ const slider = (function(slider) {
 
     function renderSlides(n) {
         // Проверяем последний и начальный слайд для цикличного переключения
-        if (n > sliderItems.length) {
-            slideIndex = 1
+        if (n > sliderItems.length - 1) {
+            slideIndex = 0
         } 
-        if (n < 1) {
-            slideIndex = sliderItems.length
-        } 
+        if (n < 0) {
+            slideIndex = sliderItems.length - 1
+        }
 
         // Обновляем слайды и кнопки
-        sliderItems.forEach(item => item.style.zIndex = 0)
+        sliderItems.forEach((item, index) => {
+            item.style.zIndex = 0
+            item.style.opacity = 0
+        })
         dots.forEach(item => item.classList.remove('active'))
-        if (scaleAnimation) {
+        if (scaleAnimation) { // Убираем анимацию увеличения слайда, если опция включена
             sliderItemsBg.forEach(item => item.style.animation = '')
         }
 
         // Делаем активным текущий слайд и кнопку
-        sliderItems[slideIndex - 1].style.zIndex = 1
-        dots[slideIndex - 1].classList.add('active')
-        if (scaleAnimation) {
-            sliderItemsBg[slideIndex - 1].style.animation = `animate ${scaleAnimationTimer}s ease-in-out 0s 1 normal forwards`
+        sliderItems[slideIndex].style.zIndex = 1
+        sliderItems[slideIndex].style.opacity = 1
+        dots[slideIndex].classList.add('active')
+        if (scaleAnimation) {  // Добавляем анимацию увеличения слайда, если опция включена
+            sliderItemsBg[slideIndex].style.animation = `animate ${scaleAnimationTimer}s ease-in-out 0s 1 normal forwards`
         }
     }
-
+ 
     // Фу-ция переключения вперед - назад
     function nextSlide(n) {
-        renderSlides(slideIndex += n)
+        slideIndex += n
+        renderSlides(slideIndex)
     }
     // Фу-ция переключения кнопками
     function currentSlide(n) {
@@ -79,8 +113,8 @@ const slider = (function(slider) {
 
         dotsWrap.addEventListener('click', (event) => {
             event.preventDefault()
-            for (let i = 0; i < dots.length + 1; i++) {
-                if (event.target.classList.contains('header-slider__buttons--dot') && event.target == dots[i - 1]) {
+            for (let i = 0; i < dots.length; i++) {
+                if (event.target.classList.contains('header-slider__buttons--dot') && event.target == dots[i]) {
                     currentSlide(i)
                 }
             }
