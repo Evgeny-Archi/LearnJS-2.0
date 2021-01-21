@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/slider2.css">
+    <link rel="stylesheet" href="css/slider2-media.css" media="only screen and (max-width: 1280px)">
     <title>Slider 2.0</title>
 </head>
 <body>
@@ -22,10 +23,50 @@
                     <li><a href="#" class="nav__item">Consectetur</a></li>
                 </ul>
             </nav>
-            <div><a href="#" class="burger">&#9776;</a></div>
+            <div class="js-sidenav-open"><a href="#" class="burger">&#9776;</a></div>
+        </div>
+
+        <div class="backdrop"></div>
+        
+        <!-- Side navigation bar -->
+        <div class="header-side__nav">
+            <button class="header-side__nav--close">&times;</button>
+            <nav class="side-nav-box">
+                <ul class="side-nav">
+                    <li><a href="#" class="side-nav__item active">Home</a></li>
+                    <li><a href="#" class="side-nav__item">Lorem</a></li>
+                    <li><a href="#" class="side-nav__item">Ipsum</a></li>
+                    <li><a href="#" class="side-nav__item">Dolor</a></li>
+                    <li><a href="#" class="side-nav__item">Sit</a></li>
+                    <li><a href="#" class="side-nav__item">Consectetur</a></li>
+                </ul>
+            </nav>
+            <span class="side-options__title">Настройки слайдера</span>
+            <form action="" class="side-options">
+                <div class="side-options__item">
+                    <label for="slide_index">Номер начального слайда</label><input type="text" placeholder="1" id="slide_index" class="side-options__item--input">
+                </div>
+                <div class="side-options__item">
+                    <label for="autoplay">Авто переключение слайдов</label><input type="checkbox" id="autoplay">
+                </div>
+                <div class="side-options__item">
+                    <label for="progress_bar">Строка переключения слайдов</label><input type="checkbox" id="progress_bar">
+                </div>
+                <div class="side-options__item">
+                    <label for="autoplay_timer">Время смены слайдов</label><input type="text" placeholder="1" id="autoplay_timer" class="side-options__item--input">
+                </div>
+                <div class="side-options__item">
+                    <label for="scale_slider">Анимация увеличения слайда</label><input type="checkbox" id="scale_slider">
+                </div>
+                <div class="side-options__item">
+                    <label for="scale_slider_timer">Время анимации увеличения</label><input type="text" placeholder="1" id="scale_slider_timer" class="side-options__item--input">
+                </div>
+                <input type="submit" class="btn option-btn" value="Применить">
+            </form>
         </div>
     </header>
 
+    <!-- Slider section -->
     <div class="header-slider">
         <div class="header-slider__item" style="z-index: 1">
             <div class="header-slider__item--bg" style="background-image: url(img/slider2/01.jpeg)"></div>
@@ -51,7 +92,7 @@
                 <button class="btn">Show more...</button>
             </div>
         </div>
-        <!-- test -->
+        <!-- test
         <div class="header-slider__item" style="z-index: 0">
             <div class="header-slider__item--bg" style="background-image: url(img/slider2/02.jpeg)"></div>
             <div class="header-slider__item--text">
@@ -67,7 +108,7 @@
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi totam eius voluptate unde tenetur illum, debitis officia quo quis odit quasi aliquam et quia, aperiam molestiae, explicabo minus iusto veniam.</p>
                 <button class="btn">Show more...</button>
             </div>
-        </div>
+        </div> -->
         <div class="header-slider__arrow--left">&#10092;</div>
         <div class="header-slider__arrow--right">&#10093;</div>
         <div class="header-slider__buttons"></div>
@@ -79,6 +120,6 @@
 
 </section>
 
-    <script src="js/slider2.js"></script>
+<script src="js/slider2.js"></script>
 </body>
 </html>
