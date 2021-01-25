@@ -357,5 +357,54 @@
 // console.log(buildString('asdasd'));
 // console.log(buildString(''));
 
+// let i = 10000
+// let result = null
+// document.querySelector('#step').addEventListener('click', () => {
+//     result = i.toString().split('').map(item => +item)
+//     result.shift()
+//     i++
+//     console.log(result);
+// })
+// // [0, 0, 0, 1]
+// // [0, 0, 0, 2]
+// // [0, 0, 0, 9]
+// // [0, 0, 1, 0]
 
+// function transform(arr) {
+//     const obj = {}
+//     arr.map(item => obj[item.name] = item.value)
+//     return obj
+// }
+// const arr = [
+//     {name: 'name', value: 'Archi'},
+//     {name: 'age', value: '29'}
+// ]
+// console.log(transform(arr)) // {name: 'Archi', age: 29}
+
+// const arr = []
+
+// function summ(num) {
+//     num = BigInt(num)
+//     let sum = (num != 1n) ? num * summ(num - 1n) : 1n
+
+//     return [...sum.toString()].reduce((acc, value) => acc + +value, 0)
+    
+// }
+// console.log(summ(100));
+
+const app = (() => {
+    let _privat = 'privat'
+
+    const _privatMethod = () => {
+        console.log(_privat);
+    }
+
+    return {
+        publickMethod: () => {
+            return _privat
+        }
+    }
+})
+let app2 = app()
+console.log(app2.publickMethod())
 

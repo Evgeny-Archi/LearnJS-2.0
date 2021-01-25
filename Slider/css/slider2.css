@@ -9,7 +9,7 @@ body {
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   font-size: 14px;
   background: #1b191a;
-  color: #fff;
+  color: #fcfcfc;
   opacity: 0;
   -webkit-transition: opacity .3s ease;
   transition: opacity .3s ease;
@@ -19,23 +19,23 @@ body {
   display: inline-block;
   padding: 1em 1.4em;
   margin-top: 40px;
-  border: 1px solid #fff;
+  border: 1px solid #fcfcfc;
   background: transparent;
   text-transform: uppercase;
-  color: #fff;
+  color: #fcfcfc;
   cursor: pointer;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
 
 .btn:hover {
-  -webkit-box-shadow: 0 0 1em rgba(255, 255, 255, 0.6);
-          box-shadow: 0 0 1em rgba(255, 255, 255, 0.6);
+  -webkit-box-shadow: 0 0 1em rgba(252, 252, 252, 0.6);
+          box-shadow: 0 0 1em rgba(252, 252, 252, 0.6);
 }
 
 .option-btn {
   font-size: .9em;
-  margin-left: 70%;
+  margin-left: 35%;
 }
 
 /* Header section */
@@ -94,16 +94,16 @@ body {
   font-size: 1em;
   font-weight: bold;
   letter-spacing: .2em;
-  text-shadow: 0 0 0.6em #fff;
+  text-shadow: 0 0 0.6em #fcfcfc;
   text-decoration: none;
-  color: #fff;
+  color: #fcfcfc;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
   text-transform: uppercase;
 }
 
 .header-top__logo a:hover {
-  text-shadow: 0 0 1em #fff;
+  text-shadow: 0 0 1em #fcfcfc;
 }
 
 .header-top__logo a span {
@@ -122,7 +122,7 @@ body {
 }
 
 .header-top__nav .burger {
-  color: #fff;
+  color: #fcfcfc;
   text-decoration: none;
   padding-left: 1em;
   -webkit-transition: all .2s ease;
@@ -130,7 +130,7 @@ body {
 }
 
 .header-top__nav .burger:hover {
-  text-shadow: 0 0 1em #fff;
+  text-shadow: 0 0 1em #fcfcfc;
 }
 
 .header-top .nav {
@@ -141,7 +141,7 @@ body {
 }
 
 .header-top .nav__item {
-  color: #fff;
+  color: #fcfcfc;
   text-decoration: none;
   text-transform: uppercase;
   padding: 0 1em;
@@ -158,7 +158,7 @@ body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  background: #fff;
+  background: #fcfcfc;
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
@@ -177,7 +177,7 @@ body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  background: #fff;
+  background: #fcfcfc;
 }
 
 .header-side__nav {
@@ -186,7 +186,7 @@ body {
   top: 0;
   width: 460px;
   height: 100vh;
-  background: rgba(27, 25, 26, 0.8) url("../img/slider2/side-nav-bg.jpeg") 0 0 repeat;
+  background: rgba(27, 25, 26, 0.8) url("../img/side-nav-bg.jpeg") 0 0 repeat;
   background-size: cover;
   -webkit-box-shadow: -10px 0 10px rgba(27, 25, 26, 0.8);
           box-shadow: -10px 0 10px rgba(27, 25, 26, 0.8);
@@ -205,7 +205,7 @@ body {
   border: none;
   outline: none;
   background: transparent;
-  color: #fff;
+  color: #fcfcfc;
   font-size: 2em;
   margin: 10px 15px 0 auto;
   padding: 10px;
@@ -217,7 +217,7 @@ body {
 .header-side__nav--close:hover {
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
-  text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  text-shadow: 0 0 5px rgba(252, 252, 252, 0.8);
 }
 
 .header-side__nav .side-nav-box {
@@ -232,7 +232,7 @@ body {
 .header-side__nav .side-nav__item {
   display: block;
   max-width: 60%;
-  color: #fff;
+  color: #fcfcfc;
   text-decoration: none;
   text-transform: uppercase;
   padding: 1em 0;
@@ -276,13 +276,107 @@ body {
   padding: 1em;
 }
 
-.header-side__nav .side-options__item--input {
-  max-width: 3em;
-  text-align: center;
-  background: transparent;
+.header-side__nav .side-options__item-text {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.header-side__nav .side-options__item .select {
+  width: 100%;
+  min-width: 20px;
+  max-width: 50px;
+  background: #fcfcfc;
+  border-radius: 0.25em;
+  font-size: inherit;
+  cursor: pointer;
+  line-height: 1;
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "select";
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+}
+
+.header-side__nav .side-options__item .select::after {
+  content: "";
+  width: 0.8em;
+  height: 0.5em;
+  background-color: #1b191a;
+  -webkit-clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  -ms-grid-column-align: end;
+      justify-self: end;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: select;
+  margin-right: 0.5em;
+}
+
+.header-side__nav .side-options__item .select select {
+  width: 100%;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
   border: none;
+  padding: 0.5em 0.5em;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
   outline: none;
-  color: #fff;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: select;
+}
+
+.header-side__nav .side-options__item .select select:disabled {
+  cursor: not-allowed;
+}
+
+.header-side__nav .side-options__item .checkbox {
+  visibility: hidden;
+}
+
+.header-side__nav .side-options__item .checkbox-label {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 26px;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #969696;
+}
+
+.header-side__nav .side-options__item .checkbox-label:after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fcfcfc;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  -webkit-transition: left .2s ease;
+  transition: left .2s ease;
+}
+
+.header-side__nav .side-options__item .checkbox:checked + .checkbox-label:after {
+  left: 26px;
+}
+
+.header-side__nav .side-options__item .checkbox:checked + .checkbox-label {
+  background: #b4ad8e;
+}
+
+.header-side__nav .side-options__item .checkbox:disabled + .checkbox-label {
+  opacity: .6;
+  cursor: not-allowed;
 }
 
 .header-slider {
@@ -297,7 +391,7 @@ body {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   letter-spacing: .1em;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(252, 252, 252, 0.4);
 }
 
 .header-slider__item {
@@ -445,7 +539,7 @@ body {
 /* Section main */
 .main {
   height: 100vh;
-  background: url(../img/slider2/bg.jpeg) center center no-repeat;
+  background: url(../img/bg.jpeg) center center no-repeat;
 }
 
 /* Slider scale bg image animation */
