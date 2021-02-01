@@ -1,6 +1,4 @@
-/* Slider */
-
-class Slider {
+export class Slider {
     constructor(slider) {
         this.mainSlider = document.querySelector(slider);
         this.sliderItems = this.mainSlider.querySelectorAll('.header-slider__item');
@@ -108,69 +106,8 @@ class Slider {
     }
 
     renderSlides(n) {
-        this.refreshAndCheckOptions()
-
-        // Проверяем последний и начальный слайд для цикличного переключения
-        if (n > this.sliderItems.length - 1) {
-            this._sliderIndex = n
-        } 
-        if (n < 0) {
-            this._sliderIndex = this.sliderItems.length - 1
-        }
-
-        // Делаем активным текущий слайд и кнопку
-        this.sliderItems[this._sliderIndex].style.zIndex = 1
-        this.sliderItems[this._sliderIndex].style.opacity = 1
-        this.dots[this._sliderIndex].classList.add('active')
-        if (this._scaleAnimation) {  // Добавляем анимацию увеличения слайда, если опция включена
-            this.sliderItemsBg[this._sliderIndex].style.animation = `animateScale ${this._scaleAnimationTimer}s ease-in-out 0s 1 normal forwards`
-        }
-        if (this.autoSlide) {
-            this.mainSlider.appendChild(this._progressBarNode)
-            this.progressBar.style.animation = `animate-progress-bar ${this._autoSlideTime / 1000}s linear 1`
-        }
+        
     }
 
-    refreshAndCheckOptions() {
-         // Проверяем включен ли прогресс бар
-        if (!this._isProgressBar) this.progressBar.style.display = 'none'
-        // Обновляем слайды и кнопки
-        this.sliderItems.forEach((item) => {
-            item.style.zIndex = 0
-            item.style.opacity = 0 // Прозрачность нужна для плавной смены слайдов
-        })
-        this.dots.forEach(item => item.classList.remove('active'))
-        if (this._scaleAnimation) { // Убираем анимацию увеличения слайда после переключения слайда
-            this.sliderItemsBg.forEach(item => item.style.animation = '')
-        }
-        if (this._autoSlide) {
-            this._progressBarNode = this.mainSlider.removeChild(this.progressBar)
-        }
-    }
-
-     // Фу-ция переключения вперед - назад
-     nextSlide(n) {
-        this.renderSlides(this._slideIndex += n)
-    }
-    // Фу-ция переключения кнопками
-    currentSlide(n) {
-        this.renderSlides(this._slideIndex = n)
-    }
+     
 }
-const slider = new Slider('.header-slider')
-
-slider.nextButton.addEventListener('click', (event) => {
-    slider.nextSlide(1)
-})
-slider.prevButton.addEventListener('click', (event) => {
-    slider.nextSlide(-1)
-})
-
-slider.dotsWrap.addEventListener('click', (event) => {
-    event.preventDefault()
-    for (let i = 0; i < slider.dots.length; i++) {
-        if (event.target.classList.contains('header-slider__buttons--dot')) {
-            slider.currentSlide(i)
-        }
-    }
-})

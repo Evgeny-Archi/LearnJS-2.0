@@ -1,5 +1,5 @@
 
-const slider = (function(slider) {
+const slider = function(slider) {
     // Получаем элементы со страницы
     const mainSlider = document.querySelector(slider),
           sliderItems = mainSlider.querySelectorAll('.header-slider__item'),
@@ -11,13 +11,13 @@ const slider = (function(slider) {
           progressBar = mainSlider.querySelector('.header-slider__progressbar');
 
     // Системные переменные
-    let slideIndex = 0, // Номер начального слайда
-        autoSlide = true, // Авто переключение слайдов
-        isProgressBar = autoSlide, // Строка прогресса переключения (работает, если вкл Авто переключение). Выкл - false
-        autoSlideTime = 7000, // Время переключения слайдов в авто режиме (ms)
-        progressBarNode = null, // Служит для обноление анимации
-        scaleAnimation = true, // Анимация увеличения слайда
-        scaleAnimationTimer = 7; // Продолжительность анимации (s)
+    let slideIndex = localStorage.getItem('sliderOptions') ? Number(JSON.parse(localStorage.getItem('sliderOptions')).sliderIndex) - 1 : 0, // Номер начального слайда
+        autoSlide = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).autoplay : true, // Авто переключение слайдов
+        isProgressBar = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).progressBar : autoSlide, // Строка прогресса переключения (работает, если вкл Авто переключение). Выкл - false
+        autoSlideTime = localStorage.getItem('sliderOptions') ? Number(JSON.parse(localStorage.getItem('sliderOptions')).autoplayTimer) * 1000 : 7000, // Время переключения слайдов в авто режиме (ms)
+        scaleAnimation = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).scaleSlider : true, // Анимация увеличения слайда
+        scaleAnimationTimer = localStorage.getItem('sliderOptions') ? Number(JSON.parse(localStorage.getItem('sliderOptions')).autoplayTimer) : 7, // Продолжительность анимации (s)
+        progressBarNode = null; // Служит для обновления анимации
 
     // Проверка на наличие слайдов
     sliderItems.length === 0 ? placeholder() : renderSlides(slideIndex)
@@ -115,5 +115,5 @@ const slider = (function(slider) {
             }
         })
     })()
-})
+}
 const sliderInit = slider('.header-slider')

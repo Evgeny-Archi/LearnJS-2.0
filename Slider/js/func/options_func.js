@@ -1,11 +1,4 @@
 /* Настройки слайдера. Получение и добавление */
-class sliderOptions {
-    constructor(form) {
-        this.formWrap = document.querySelector(form);
-        
-    }
-}
-
 const setSliderOptions = (function(form) {
 
     const formWrap = document.querySelector(form),
@@ -16,7 +9,8 @@ const setSliderOptions = (function(form) {
           autoplayTimer = formWrap.querySelector('#autoplay_timer'),
           scaleSliderTimer = formWrap.querySelector('#scale_slider_timer'),
           statusOutWrap = document.querySelector('.status-message-out');
-    
+
+    // Слушатель переключения чекбоксов
     (function listeners() {
         autoplay.addEventListener('change', (event) => {
             checkHandler(event.target, progressBar, autoplayTimer)
@@ -55,12 +49,17 @@ const setSliderOptions = (function(form) {
         try {
             localStorage.setItem('sliderOptions', JSON.stringify(options))
             statusOutWrap.innerHTML = '<span class="success">Данные успешно сохранены</span>'
+            slider('.header-slider')
         } catch (error) {
             console.log(new Error('Localstorage are not supported'))
             statusOutWrap.innerHTML = `<span class="error">Ошибка: ${error.message}</span>`
         }
         
     })
+
+    autoplay.checked = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).autoplay : true
+    progressBar.checked = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).autoplay : autoplay.checked
+    scaleSlider.checked = localStorage.getItem('sliderOptions') ? JSON.parse(localStorage.getItem('sliderOptions')).scaleSlider : true
 })
 
 const setSliderOptionsInit = setSliderOptions('.side-options')
