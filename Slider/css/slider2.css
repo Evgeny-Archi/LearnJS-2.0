@@ -38,6 +38,57 @@ body {
   margin-left: 35%;
 }
 
+.status-message-out {
+  text-align: center;
+  margin-top: 3em;
+  color: #b4ad8e;
+}
+
+.status-message-out .success, .status-message-out .error {
+  position: relative;
+}
+
+.status-message-out .success:before {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: -30px;
+  display: inline-block;
+  width: 12px;
+  height: 7px;
+  border-left: 2px solid green;
+  border-bottom: 2px solid green;
+  -webkit-transform: rotate(-50deg);
+          transform: rotate(-50deg);
+}
+
+.status-message-out .error {
+  color: #b4ad8e;
+}
+
+.status-message-out .error:before, .status-message-out .error:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 2px;
+  height: 12px;
+  background: #f05a5a;
+}
+
+.status-message-out .error:before {
+  top: 2px;
+  left: -20px;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.status-message-out .error:after {
+  top: 2px;
+  left: -20px;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+
 /* Header section */
 .header {
   height: 100vh;
@@ -53,6 +104,8 @@ body {
   position: fixed;
   background: rgba(27, 25, 26, 0.7);
   padding: .8em 10em;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
 }
 
 .header-top {
