@@ -392,19 +392,42 @@
 // }
 // console.log(summ(100));
 
-const app = (() => {
-    let _privat = 'privat'
+// const app = (() => {
+//     let _privat = 'privat'
+//     const _privatMethod = () => {
+//         console.log(_privat);
+//     }
+//     return {
+//         publickMethod: () => {
+//             return _privat
+//         }
+//     }
+// })
+// let app2 = app()
+// console.log(app2.publickMethod())
 
-    const _privatMethod = () => {
-        console.log(_privat);
-    }
+// Нахождение большего числа в массиве, если за ним следуют до конца только меньшие
+function solve(arr) {
+    // let sorted = new Set()
+    // for (let i = 0; i < arr.length; i++) {
+    //     for (let j = i; j < arr.length; j++) {
+    //         if (arr[i] < arr[j + 1]) {
+    //             if (sorted.has(arr[i])) {
+    //                 sorted.delete(arr[i])
+    //             }
+    //             break
+    //         } else {
+    //             sorted.add(arr[i])
+    //         }
+    //     }
+    // }
+    // return sorted
 
-    return {
-        publickMethod: () => {
-            return _privat
-        }
-    }
-})
-let app2 = app()
-console.log(app2.publickMethod())
-
+    return arr.filter((item, index, arr) => {
+        return arr.slice(index + 1).every(elem => item > elem)
+    })
+}
+console.log(solve([16, 17, 14, 3, 14, 5, 2])) // [17, 14, 5, 2]
+console.log(solve([92, 52, 93, 31, 89, 87, 77, 105])) // [105]
+console.log(solve([75, 47, 42, 56, 13, 55])) // [75, 56, 55]
+console.log(solve([67, 54, 27, 85, 66, 88, 31, 24, 49])) // [88, 49]
