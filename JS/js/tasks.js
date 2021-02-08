@@ -407,27 +407,97 @@
 // console.log(app2.publickMethod())
 
 // Нахождение большего числа в массиве, если за ним следуют до конца только меньшие
-function solve(arr) {
-    // let sorted = new Set()
-    // for (let i = 0; i < arr.length; i++) {
-    //     for (let j = i; j < arr.length; j++) {
-    //         if (arr[i] < arr[j + 1]) {
-    //             if (sorted.has(arr[i])) {
-    //                 sorted.delete(arr[i])
-    //             }
-    //             break
-    //         } else {
-    //             sorted.add(arr[i])
-    //         }
-    //     }
-    // }
-    // return sorted
+// function solve(arr) {
+//     // let sorted = new Set()
+//     // for (let i = 0; i < arr.length; i++) {
+//     //     for (let j = i; j < arr.length; j++) {
+//     //         if (arr[i] < arr[j + 1]) {
+//     //             if (sorted.has(arr[i])) {
+//     //                 sorted.delete(arr[i])
+//     //             }
+//     //             break
+//     //         } else {
+//     //             sorted.add(arr[i])
+//     //         }
+//     //     }
+//     // }
+//     // return sorted
 
-    return arr.filter((item, index, arr) => {
-        return arr.slice(index + 1).every(elem => item > elem)
+//     return arr.filter((item, index, arr) => {
+//         return arr.slice(index + 1).every(elem => item > elem)
+//     })
+// }
+// console.log(solve([16, 17, 14, 3, 14, 5, 2])) // [17, 14, 5, 2]
+// console.log(solve([92, 52, 93, 31, 89, 87, 77, 105])) // [105]
+// console.log(solve([75, 47, 42, 56, 13, 55])) // [75, 56, 55]
+// console.log(solve([67, 54, 27, 85, 66, 88, 31, 24, 49])) // [88, 49]
+
+// Нахождение анаграм
+// function anagram(strA, strB) {
+    // variant 1
+    // const sorted =  str.map(item => item.toLowerCase().split('').sort().join(''))
+    // return sorted.every(item => item === sorted[0])
+
+    // variant 2
+//     function buildCharObject(str) {
+//         const charObj = {}
+//         str = str.toLowerCase().replace(/[^\w]/g)
+//         for (let char of str) {
+//             charObj[char] = charObj[char] + 1 || 1
+//         }
+//         return charObj
+//     }
+//     const objA = buildCharObject(strA)
+//     const objB = buildCharObject(strB)
+//     if (Object.keys(objA).length !== Object.keys(objB).length) {
+//         return false
+//     }
+//     for (let char in objA) {
+//         if (objA[char] !== objB[char]) {
+//             return false
+//         }
+//     }
+//     return true
+// }
+
+// console.log(anagram('Friend', 'finder'))
+// console.log(anagram('hello', 'bye'))
+// console.log(anagram('props', 'poprs'))
+
+// Деструктуризация
+// const obj = {
+//     first: 1,
+//     second: 2,
+//     third: 3,
+//     fourth: 4,
+//     fifth: 5
+// }
+// const { third: three, fifth: five } = obj
+// console.log(three, five)
+
+// Получение анаграм из строки
+function getAnagram(str) {
+    const arr = []
+    const original = str.split(' ')
+
+    const map = new Map()
+    original.map(item => {
+        let sorted = [...item].sort().join('')
+        if (map.has(sorted)) {
+            map.get(sorted).push(item)
+        } else {
+            map.set(sorted, [item])
+        }
     })
+
+    map.forEach((value, key) => {
+        if (value.length > 1) {
+            arr.push(value)
+        }
+    })
+
+    return arr
 }
-console.log(solve([16, 17, 14, 3, 14, 5, 2])) // [17, 14, 5, 2]
-console.log(solve([92, 52, 93, 31, 89, 87, 77, 105])) // [105]
-console.log(solve([75, 47, 42, 56, 13, 55])) // [75, 56, 55]
-console.log(solve([67, 54, 27, 85, 66, 88, 31, 24, 49])) // [88, 49]
+
+const str = 'адрес карп кума мир мука парк рим среда стук рост сорт трос'
+console.log(getAnagram(str))
