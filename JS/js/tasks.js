@@ -476,28 +476,117 @@
 // console.log(three, five)
 
 // Получение анаграм из строки
-function getAnagram(str) {
-    const arr = []
-    const original = str.split(' ')
+// function getAnagram(str) {
+//     const arr = []
+//     const original = str.split(' ')
+//     const map = new Map()
+//     original.map(item => {
+//         let sorted = [...item].sort().join('')
+//         if (map.has(sorted)) {
+//             map.get(sorted).push(item)
+//         } else {
+//             map.set(sorted, [item])
+//         }
+//     })
+//     map.forEach((value, key) => {
+//         if (value.length > 1) {
+//             arr.push(value)
+//         }
+//     })
+//     return arr
+// }
+// const str = 'адрес карп кума мир мука парк рим среда стук рост сорт трос'
+// console.log(getAnagram(str))
 
-    const map = new Map()
-    original.map(item => {
-        let sorted = [...item].sort().join('')
-        if (map.has(sorted)) {
-            map.get(sorted).push(item)
-        } else {
-            map.set(sorted, [item])
-        }
-    })
+// Promise
+// const printS = (number, cb) => {
+//     setTimeout(() => {
+//         console.log(`Прошло: ${number}`)
+//         cb()
+//     }, 1000)
+// }
+// printS(1, () => {
+//     printS(2, () => {
+//         printS(3, () => {})
+//     })
+// })
+// const printS = (number) => {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             console.log(`Прошло: ${number}`)
+//             resolve()
+//         }, 1000)
+//     })
+// }
+// // printS(1)
+// //     .then(() => {
+// //         return printS(2)
+// //     })
+// //     .then(() => {
+// //         return printS(3)
+// //     })
+// (async function () {
+//     await printS(1)
+//     await printS(2)
+//     await printS(3)
+// })()
 
-    map.forEach((value, key) => {
-        if (value.length > 1) {
-            arr.push(value)
-        }
-    })
+// FizzBuzz
+// Структурный подход:
+// for (let i = 0; i < 100; i++) {
+//     if (i % 3 === 0 && i % 5 === 0) {
+//         console.log('FizzBuzz')
+//     } else if (i % 3 === 0) {
+//         console.log('Fizz')
+//     } else if (i % 5 === 0) {
+//         console.log('Buzz')
+//     } else {
+//         console.log(i)
+//     }
+// }
+// Структурный подход с флагами:
+// function isFizz(n) {
+//     if (n % 3 === 0) {
+//         return true
+//     }
+//     return false
+// }
+// function isBuzz(n) {
+//     if (n % 5 === 0) {
+//         return true
+//     }
+//     return false
+// }
+// function isFizzBuzz(n) {
+//     if (n % 3 === 0 && n % 5 === 0) {
+//         return true
+//     }
+//     return false
+// }
+// for (let i = 0; i < 100; i++) {
+//     switch(true) {
+//         case isFizz(i):
+//             console.log('Fizz')
+//             break
+//         case isBuzz(i):
+//             console.log('Buzz')
+//             break
+//         case isFizzBuzz(i):
+//             console.log('FizzBuzz')
+//             break
+//         default:
+//             console.log(i)
+//     }
+// }
+// Функциональный подход
+// function gen(n, w) {
+//     return function(num) {
+//         return num % n === 0 ? w : ''
+//     }
+// }
+// const fizz = gen(3, 'Fizz');
+// const buzz = gen(5, 'Buzz');
+// [...Array(99).keys()].map(i => i + 1).forEach(i => console.log(fizz(i) + buzz(i) || i))
 
-    return arr
-}
 
-const str = 'адрес карп кума мир мука парк рим среда стук рост сорт трос'
-console.log(getAnagram(str))
+
