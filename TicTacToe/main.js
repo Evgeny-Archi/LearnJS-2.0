@@ -1,7 +1,7 @@
 // Tic Tac Toe game
 class Controller {
-    constructor(wrap) {
-        this.wrap = document.querySelector(wrap)
+    constructor() {
+        this.wrap = document.querySelector('.wrap')
         this.boxes = this.wrap.querySelectorAll('.box')
         this.move = 0 // Считает ходы (четные - крестики, нечетные - нолики)
         this.wins = [ // Выигрышные комбинации
@@ -17,16 +17,15 @@ class Controller {
     }
 
     // Добавляем крестик или нолик в поле
-    makeMove(event) {
-        const box = event.target
+    makeMove(box) {
         if (box.classList.contains('box')) {
             if (!this.checkCollision(box)) { // Проверяем на повторное нажатие на одно поле
                 return
             }
-            box.innerHTML = (this.move % 2 === 0) ? 'X' : 'O'
+
             this.move++
+            return (this.move % 2 === 0) ? 'O' : 'X'
         }
-        // this.checkWin()
     }
 
     // Проверка на повторное нажатие на одно поле
@@ -40,36 +39,54 @@ class Controller {
     // Проверяем победителя
     checkWin() {
         // Сравниваем поля с выигрышными комбинациями
-        const checkfield = (item, field) => {
-            return this.boxes[item[0]].textContent === field && this.boxes[item[1]].textContent === field && this.boxes[item[2]].textContent === field
+        const checkfield = (i, field) => {
+            return this.boxes[this.wins[i][0]].textContent === field && this.boxes[this.wins[i][1]].textContent === field && this.boxes[this.wins[i][2]].textContent === field
         }
-    
-        this.wins.map(item => {
-            if (checkfield(item, 'X')) {
-                this.wrap.removeEventListener('click', listener)
-                return 'X'
-            } else if (checkfield(item, 'O')) {
-                this.wrap.removeEventListener('click', listener)
-                return 'O'
+
+        for (let i = 0; i < this.wins.length; i++) {
+            if (checkfield(i, 'X')) {
+                this.stopGame()
+                return 'Win X'
+            } else if (checkfield(i, 'O')) {
+                this.stopGame()
+                return 'Win O'
             }
-        })
+        }
+
+        if (this.move === 9) {
+            this.stopGame()
+            return 'Ничья'
+        }
+        // location.reload() // Перезагрузка страницы
+    }
+
+    // Останавливаем игру
+    stopGame() {
+        this.wrap.removeEventListener('click', listener)
     }
 }
 
+// Отображение хода игры и победителя
 class View extends Controller {
     constructor(wrap) {
         super(wrap)
         this.out = document.querySelector('.out')
+        this.result = null
     }
 
     showResult() {
-        console.log(this.checkWin())
+        console.log(this.result)
     }
 
     showMove(event) {
-        this.makeMove(event)
+        const step = this.makeMove(event.target)
+        event.target.innerHTML = step
+
         this.out.textContent = this.move
-        this.showResult()
+        if (this.checkWin() !== undefined) {
+            this.result = this.checkWin()
+            this.showResult()
+        }
     }
 }
 
