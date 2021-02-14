@@ -46,13 +46,14 @@ class Controller {
         for (let i = 0; i < this.wins.length; i++) {
             if (checkfield(i, 'X')) {
                 this.stopGame()
-                return 'Win X'
+                return 'Победили крестики'
             } else if (checkfield(i, 'O')) {
                 this.stopGame()
-                return 'Win O'
+                return 'Победили нолики'
             }
         }
 
+        // Макс. кол-во шаг = ничья
         if (this.move === 9) {
             this.stopGame()
             return 'Ничья'
@@ -74,19 +75,30 @@ class View extends Controller {
         this.result = null
     }
 
+    // Показывает победителя
     showResult() {
-        console.log(this.result)
+        this.out.innerHTML += `<p class="out-result">${this.result}<button class="btn">Начать заново</button></p>`
     }
 
+    // Показывает ход игры
     showMove(event) {
         const step = this.makeMove(event.target)
         event.target.innerHTML = step
 
-        this.out.textContent = this.move
+        this.out.innerHTML += `<p class="out-list">Ход: ${this.move}</p>`
         if (this.checkWin() !== undefined) {
             this.result = this.checkWin()
             this.showResult()
         }
+    }
+
+    // Обновляем игру
+    resetGame() {
+        this.boxes.forEach(item => item.textContent = '')
+        this.move = 0
+        this.result = null
+        this.out.innerHTML = ''
+        tictac.wrap.addEventListener('click', listener)
     }
 }
 
@@ -96,5 +108,12 @@ const listener = (event) => { // Фу-ция для удаления слуша�
     tictac.showMove(event)
 }
 
+const resetHAndler = (event) => {
+    if (event.target.classList.contains('btn')) {
+        tictac.resetGame()
+    }
+}
+
 tictac.wrap.addEventListener('click', listener)
+document.querySelector('.out').addEventListener('click', resetHAndler)
     

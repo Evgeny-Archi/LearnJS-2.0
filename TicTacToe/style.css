@@ -15,3 +15,24 @@
     font-weight: bold;
     box-sizing: border-box;
 }
+.out {
+    margin-top: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.out-list, .out-result {
+    display: inline;
+    border: 1px solid rgb(170, 170, 170);
+    border-radius: 6px;
+    padding: 5px 10px;
+    margin: 5px 0 0 0;
+}
+.out-result {
+    background: #d9ecd4;
+}
+.btn {
+    margin-left: 10px;
+    cursor: pointer;
+}
