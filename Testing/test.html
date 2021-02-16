@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.css" integrity="sha512-6RWs5FczsXwODIZJoL0szz3bXX5W+q/m7bFVQ7HSwZbBXd7PpyYrg2f9Dr4Y2Guqi5k4NJsemxXuiiFoI8fQ4A==" crossorigin="anonymous" />
+    <title>Testing</title>
+</head>
+<body>
+
+    <div id="mocha"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.3.0/chai.min.js" integrity="sha512-GsaNJcToirs0DOg3HiPRtMVwLj387J8+ESK/EG+FG+7HUutwc/3H9zxdc+DB0db1VjWs+MwAzvWywgZZIupZZA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/8.2.1/mocha.min.js" integrity="sha512-zfubXZH4ikPBZSjDepCk1BrPqZN/QAZ+6SurldYd8s7bmptUUqKf/cyG0PJJ9M5Z7/JlJkpg+qfYg9i9lJYG8w==" crossorigin="anonymous"></script>
+
+    <script>
+        mocha.setup('bdd')
+        let assert = chai.assert
+    </script>
+
+    <script src="test.js"></script>
+
+    <script>
+        mocha.run()
+    </script>
+</body>
+</html>
