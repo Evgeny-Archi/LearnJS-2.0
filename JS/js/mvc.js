@@ -107,7 +107,7 @@ window.addEventListener('load', () => {
 })
 
 /* Some tips */
-// Constructor - передаются model и controller для взаимодействия между ними
+// Controller - передаются model и controller для взаимодействия между ними
 // Model - работает только с данными, не знает про model и view
 // View - передается model для их отображения
 

@@ -598,10 +598,42 @@ p, указывающая начало идентификатора продук
 
 Необходимо получить идентификатор продукта (см. примеры).
 */
-function getProductId(url) {
-    const arrUrl = url.split('-')
-    return arrUrl[arrUrl.length - 2]
-}
+// function getProductId(url) {
+//     const arrUrl = url.split('-')
+//     return arrUrl[arrUrl.length - 2]
+// }
+//
+// console.log(getProductId('exampleshop.com/fancy-coffee-cup-p-90764-12052019.html')); // 90764
+// console.log(getProductId('exampleshop.com/c-3-p-0-p-654-11112011.html')); // 654
 
-console.log(getProductId('exampleshop.com/fancy-coffee-cup-p-90764-12052019.html')); // 90764
-console.log(getProductId('exampleshop.com/c-3-p-0-p-654-11112011.html')); // 654
+// Числа Фибоначчи
+// function fib(n) {
+//     let a = 1
+//     let b = 1
+//     for (let i = 3; i <= n; i++) {
+//         let c = a + b
+//         a = b
+//         b = c
+//     }
+//     return b
+// }
+// console.log(fib(10))
+
+// Нахождение суммы всех чисел между a и b
+// function sum(a, b) {
+//     // let result = 0
+//     // for (let i = Math.min(a, b); i <= Math.max(a, b); i++) {
+//     //     result += i
+//     // }
+//     // return result
+//
+//     return (Math.abs(a - b) + 1) * (a + b) / 2
+// }
+// console.log(sum(1, 0)) // 1
+// console.log(sum(0, 1)) // 1
+// console.log(sum(1, 1)) // 1
+// console.log(sum(1, 4)) // 10
+// console.log(sum(-2, 0)) // -3
+// console.log(sum(-2, 2)) // 0
+
+
