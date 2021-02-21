@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Slider" />
     <orderEntry type="module" module-name="JS" />
+    <orderEntry type="module" module-name="ToDo" />
   </component>
 </module>

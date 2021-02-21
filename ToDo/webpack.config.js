@@ -5,14 +5,14 @@ module.exports = {
     entry: './src/index',
 
     output: {
-        path: path.resolve(__dirname, 'public/js'),
-        filename: 'array.js',
+        path: path.resolve(__dirname, 'public'),
+        filename: 'app.js',
         publicPath: '/js'
     },
 
     devServer: {
-        contentBase: path.join(__dirname, 'public'),
+        contentBase: './public'
     },
 
-    devtool: 'cheap-eval-source-map'
+    devtool: 'inline-source-map' // remove for build
 }

@@ -1,12 +1,11 @@
-import Model from './model';
-import View from './view';
-import Controller from './controller';
-import { save, load } from './helper';
+import Model from './model'
+import View from './view'
+import Controller from './controller'
+import { load } from './helper'
 
-const state = load();
+const state = load()
 
-const model = new Model(state || undefined);
-model.on('change', state => save(state));
+const model = new Model(state || undefined)
+const view = new View()
+const controller = new Controller(model, view)
 
-const view = new View();
-const controller = new Controller(model, view);
