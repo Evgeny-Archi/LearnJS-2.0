@@ -1,0 +1,91 @@
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+body {
+    margin: 0px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    color: #425a70;
+    font-size: 14px;
+}
+.root {
+    max-width: 60%;
+    margin: 100px auto;
+}
+.table {
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    overflow: auto;
+    border: 1px solid #e4e7eb;
+}
+.header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+.th, .td {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+.tr {
+    display: flex;
+}
+.th {
+    height: 32px;
+    border-bottom: 1px solid #e4e7eb;
+    background: #F4F4F6;
+    font-size: 12px;
+}
+.td {
+    height: 48px;
+    border-bottom: 1px solid #edf0f2;
+}
+.search-icon {
+    height: 12px;
+    width: 12px;
+}
+.search-input {
+    margin-left: 10px;
+    margin-top: 2px;
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    color: #425a70;
+}
+.th-button {
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #425a70;
+    cursor: pointer;
+    position: relative;
+    padding: 0 14px 0 0;
+}
+.th-button::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 4px 0 4px;
+    border-color: #57728b transparent transparent transparent;
+}
+.th-button:active {
+    outline: 1px solid #425a70;
+}
+.name-icon {
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 6px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
