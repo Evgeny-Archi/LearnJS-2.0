@@ -11,7 +11,7 @@ body {
 }
 .root {
     max-width: 60%;
-    margin: 100px auto;
+    margin: 100px auto 0px auto;
 }
 .table {
     display: flex;
@@ -45,8 +45,8 @@ body {
     border-bottom: 1px solid #edf0f2;
 }
 .search-icon {
-    height: 12px;
     width: 12px;
+    height: auto;
 }
 .search-input {
     margin-left: 10px;
@@ -114,6 +114,7 @@ body {
 .load-button-wrap {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 .load-button {
     border: 1px solid #e4e7eb;
