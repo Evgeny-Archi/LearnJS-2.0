@@ -97,19 +97,23 @@ window.addEventListener('DOMContentLoaded', () => {
                 this.usersTable.appendChild(noUsers)
             }
 
-            data.forEach(user => {
-                const span = this.createElement('span', {
-                    className: 'name-icon',
-                    style: `background: ${this.colors[this.getRandomValue(0, this.colors.length)]};`
-                },
-                    this.getInitials(user.name))
-                const tdName = this.createElement('div', { className: 'td' }, span, user.name)
-                const tdUsername = this.createElement('div', { className: 'td' }, user.username)
-                const tdEmail = this.createElement('div', { className: 'td' }, user.email)
-                const tdCompany = this.createElement('div', { className: 'td' }, user.company)
-                const tr = this.createElement('div', { className: 'tr' }, tdName, tdUsername, tdEmail, tdCompany)
+            data.forEach((user, index) => {
+                if (!user.nodeDOM) { // Если нет ссылки на DOM узел, то создаем строку и добавляем в таблицу
+                    const span = this.createElement('span', {
+                            className: 'name-icon',
+                            style: `background: ${this.colors[this.getRandomValue(0, this.colors.length)]};`
+                        },
+                        this.getInitials(user.name))
+                    const tdName = this.createElement('div', { className: 'td' }, span, user.name)
+                    const tdUsername = this.createElement('div', { className: 'td' }, user.username)
+                    const tdEmail = this.createElement('div', { className: 'td' }, user.email)
+                    const tdCompany = this.createElement('div', { className: 'td' }, user.company)
+                    const tr = this.createElement('div', { className: 'tr' }, tdName, tdUsername, tdEmail, tdCompany)
 
-                this.usersTable.appendChild(tr)
+                    this.usersTable.appendChild(tr)
+
+                    this.modelState[index].nodeDOM = tr // Добавляем ссылку строки в таблице в объект модели
+                }
             })
 
             this.table.appendChild(this.usersTable)
@@ -121,12 +125,13 @@ window.addEventListener('DOMContentLoaded', () => {
             // this.usersTable.textContent = ''
             // this.renderUsers(data)
 
-            /* Вариант по сложней. Работает быстрей при наборе текста (на 5-8 мс), но не при удалении (backspace)
+            /* Вариант по сложней.
              Если входящий массив больше отфильтрованных строк в таблице, то отрисовываем их заново по массиву из модели */
             const tds = this.usersTable.querySelectorAll('.td:first-child') // Получаем ячейки с именами
             if (data.length > tds.length) {
-                this.usersTable.textContent = ''                // Удаляем содержимое таблицы, чтобы не было дублирования
-                this.renderUsers(data)                          // Заново отрисовываем строки с пользователями по отфильтрованным данным
+                data.forEach(user => {
+                    this.usersTable.appendChild(user.nodeDOM)
+                })
             } else {                                            // Если отфильтрованных данных меньше, чем строк в таблице, то удаляем те, которых нет в данных
                 const dataNames = data.map(user => user.name)   // Получаем имена из объектов массива
 
@@ -155,10 +160,8 @@ window.addEventListener('DOMContentLoaded', () => {
         // }
 
         // Сортировка таблицы по переданным данным
-        sortRows(sortedData, target, value) {
-            const tdIndex = Array.from(this.table.querySelectorAll('.th')).indexOf(target.parentNode) + 1 // Получаем индекс нужной колонки в таблице
-            const tds = Array.from(this.usersTable.querySelectorAll(`.td:nth-child(${tdIndex})`))         // Получаем массив из нужных ячеек
-            const order = target.classList.contains('ascend') ? 'ascend' : 'descend'                              // Смотрим направление сортировки
+        sortRows(sortedData, target) {
+            const order = target.classList.contains('ascend') ? 'ascend' : 'descend'   // Смотрим направление сортировки
 
             if (order === 'ascend') {
                 target.classList.remove('ascend')
@@ -167,13 +170,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 target.classList.add('ascend')
             }
 
-            sortedData.forEach(user => {
-                user = user[value].trim().toLowerCase()
-                const row = tds.find(td => {                        // Ищем совпадения с отсортированными данными. По ходу нахождения - добавляем
-                    td = td.textContent.trim().toLowerCase()
-                    return td === user
-                })
-                this.usersTable.appendChild(row.parentNode)
+            sortedData.forEach(user => {                    // Расставляем строки в таблице по отсортированным данным
+                this.usersTable.appendChild(user.nodeDOM)
             })
         }
     }
@@ -239,7 +237,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (a < b) return -1
                 return 0
             })
-            this.sortRows(sortedData, target, value)
+
+            this.sortRows(sortedData, target)
         }
 
         fixCompanyName(data) {
@@ -266,7 +265,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 this.fixCompanyName(data)                        // Убираем ненужные поля в объекте company и оставляем только название компании
                 this.modelState.push(...data)                    // Пушим данные в стейт
                 this.removePreloaderRows(tempRows)               // Удаляем заглушки
-                this.renderUsers(data)                           // Рисуем таблицу с пользователями
+                this.renderUsers(this.modelState)                           // Рисуем таблицу с пользователями
             } catch (error) {
                 console.log(error)
             }
@@ -276,7 +275,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const users = new Model()
 
 })
-
 
 /*
 <div class="tr">
