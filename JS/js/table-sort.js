@@ -23,8 +23,10 @@ window.addEventListener('DOMContentLoaded', () => {
             this.colors = ['#e4e7eb', '#fae2e2', '#fae3cd', '#fbe6a2', '#d2eef3', '#d4eee2', '#eae7f8']
 
             this.loadButton.addEventListener('click', () => this.load())
-            this.filterInput.addEventListener('input', (event) => this.filter(event))
-            this.sortUserBtn.addEventListener('click', (event) => this.sort(event))
+            this.filterInput.addEventListener('input', (event) => this.handlerFilter(event))
+            this.sortUserBtn.addEventListener('click', (event) => this.handlerSort(event))
+            this.sortEmailBtn.addEventListener('click', (event) => this.handlerSort(event))
+            this.sortCompanyBtn.addEventListener('click', (event) => this.handlerSort(event))
         }
 
         // Получаем случайное значение от min до max. Использование: получение случайной ширины для прелоадеров и случайного цвета для аватарки
@@ -104,7 +106,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const tdName = this.createElement('div', { className: 'td' }, span, user.name)
                 const tdUsername = this.createElement('div', { className: 'td' }, user.username)
                 const tdEmail = this.createElement('div', { className: 'td' }, user.email)
-                const tdCompany = this.createElement('div', { className: 'td' }, user.company.name)
+                const tdCompany = this.createElement('div', { className: 'td' }, user.company)
                 const tr = this.createElement('div', { className: 'tr' }, tdName, tdUsername, tdEmail, tdCompany)
 
                 this.usersTable.appendChild(tr)
@@ -152,11 +154,28 @@ window.addEventListener('DOMContentLoaded', () => {
         //     })
         // }
 
-        sort() {
-            const test = this.usersTable.querySelector('.tr')
-            this.usersTable.appendChild(test)
-        }
+        // Сортировка таблицы по переданным данным
+        sortRows(sortedData, target, value) {
+            const tdIndex = Array.from(this.table.querySelectorAll('.th')).indexOf(target.parentNode) + 1 // Получаем индекс нужной колонки в таблице
+            const tds = Array.from(this.usersTable.querySelectorAll(`.td:nth-child(${tdIndex})`))         // Получаем массив из нужных ячеек
+            const order = target.classList.contains('ascend') ? 'ascend' : 'descend'                              // Смотрим направление сортировки
 
+            if (order === 'ascend') {
+                target.classList.remove('ascend')
+                sortedData = sortedData.reverse()
+            } else {
+                target.classList.add('ascend')
+            }
+
+            sortedData.forEach(user => {
+                user = user[value].trim().toLowerCase()
+                const row = tds.find(td => {                        // Ищем совпадения с отсортированными данными. По ходу нахождения - добавляем
+                    td = td.textContent.trim().toLowerCase()
+                    return td === user
+                })
+                this.usersTable.appendChild(row.parentNode)
+            })
+        }
     }
 
     class Model extends Template{
@@ -175,14 +194,58 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        get filteredData() {
+            return this.filteredState
+        }
+
+        set filteredData(value) {
+            if (Array.isArray(value)) {
+                this.filteredState = value
+            }
+        }
+
         // Фильтрация модели и передача отфильтрованных данных представлению
-        filter({ target }) {
+        handlerFilter({ target }) {
             if (!this.modelState.length) return
             const filter = target.value.toLowerCase()
-            const filteredData = this.modelState.filter(user => {
+            this.filteredData = this.modelState.filter(user => {
                 return user.name.toLowerCase().includes(filter)
             })
-            this.filterUsers(filteredData)
+            this.filterUsers(this.filteredData)
+        }
+
+        // Сортировка модели и передача представлению
+        handlerSort({ target }) {
+            // Смотрим есть ли отфильтрованные данные, если есть, то сортировку делаем по ним
+            const sortedData = (this.filteredData) ? this.filteredData : this.modelState
+            let value = null
+
+            switch(target.id) {
+                case 'user-btn':
+                    value = 'username'
+                    break
+                case 'email-btn':
+                    value = 'email'
+                    break
+                case 'company-btn':
+                    value = `company`
+                    break
+            }
+
+            sortedData.sort((a, b) => {
+                a = a[value].trim().toLowerCase()
+                b = b[value].trim().toLowerCase()
+                if (a > b) return 1
+                if (a < b) return -1
+                return 0
+            })
+            this.sortRows(sortedData, target, value)
+        }
+
+        fixCompanyName(data) {
+            data.forEach(user => {
+                user.company = user.company.name
+            })
         }
 
         async getUsers() {
@@ -200,6 +263,7 @@ window.addEventListener('DOMContentLoaded', () => {
             try {
                 const tempRows = this.setPreloaderRows()         // Добавляем заглушки во время загрузки данных
                 const data = await this.getUsers()               // Получаем данные с сервера
+                this.fixCompanyName(data)                        // Убираем ненужные поля в объекте company и оставляем только название компании
                 this.modelState.push(...data)                    // Пушим данные в стейт
                 this.removePreloaderRows(tempRows)               // Удаляем заглушки
                 this.renderUsers(data)                           // Рисуем таблицу с пользователями
@@ -210,7 +274,9 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     const users = new Model()
+
 })
+
 
 /*
 <div class="tr">
@@ -222,18 +288,4 @@ window.addEventListener('DOMContentLoaded', () => {
       <div class="td">${user.company.name}</div>
    </div>
 
-<div class="tr">
-            <div class="td"><span class="name-icon" style="background: #fae3cd;">LG</span> Leanne Graham</div>
-            <div class="td">Bret</div>
-            <div class="td">Sincere@april.biz</div>
-            <div class="td">Romaguera-Crona</div>
-        </div>
-*/
-/* placeholders
-<div class="tr-fake">
-            <div class="td"><span class="name-icon-fake" style="background: #fae3cd;"></span><span class="td-fake" style="width: 50%;"></span></div>
-            <div class="td"><span class="td-fake" style="width: 40%;"></span></div>
-            <div class="td"><span class="td-fake" style="width: 80%;"></span></div>
-            <div class="td"><span class="td-fake" style="width: 70%;"></span></div>
-        </div>
 */

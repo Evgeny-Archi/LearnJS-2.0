@@ -79,6 +79,19 @@ body {
     border-width: 4px 4px 0 4px;
     border-color: #57728b transparent transparent transparent;
 }
+.ascend::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 4px 4px 4px;
+    border-color: transparent transparent #57728b transparent;
+}
 .name-icon {
     text-transform: uppercase;
     font-size: 12px;
