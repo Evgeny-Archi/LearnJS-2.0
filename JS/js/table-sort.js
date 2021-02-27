@@ -22,11 +22,13 @@ window.addEventListener('DOMContentLoaded', () => {
             this.usersTable = null  // Здесь будет хранится шаблон всех загруженных пользователей
             this.colors = ['#e4e7eb', '#fae2e2', '#fae3cd', '#fbe6a2', '#d2eef3', '#d4eee2', '#eae7f8']
 
-            this.loadButton.addEventListener('click', () => this.load())
-            this.filterInput.addEventListener('input', (event) => this.handlerFilter(event))
-            this.sortUserBtn.addEventListener('click', (event) => this.handlerSort(event))
-            this.sortEmailBtn.addEventListener('click', (event) => this.handlerSort(event))
-            this.sortCompanyBtn.addEventListener('click', (event) => this.handlerSort(event))
+            this.loadButton.addEventListener('click', () => model.load())
+            this.filterInput.addEventListener('input', (event) => model.handlerFilter(event))
+            this.sortUserBtn.addEventListener('click', (event) => model.handlerSort(event))
+            this.sortCompanyBtn.addEventListener('click', (event) => model.handlerSort(event))
+            this.sortEmailBtn.addEventListener('click', (event) => {
+                dropdown.showDropdownMenu(event, 'withSort')
+            })
         }
 
         // Получаем случайное значение от min до max. Использование: получение случайной ширины для прелоадеров и случайного цвета для аватарки
@@ -108,7 +110,13 @@ window.addEventListener('DOMContentLoaded', () => {
                     const tdUsername = this.createElement('div', { className: 'td' }, user.username)
                     const tdEmail = this.createElement('div', { className: 'td' }, user.email)
                     const tdCompany = this.createElement('div', { className: 'td' }, user.company)
-                    const tr = this.createElement('div', { className: 'tr' }, tdName, tdUsername, tdEmail, tdCompany)
+                    const moreInfoBtn = this.createElement('button', { className: 'more-info-btn', id: user.id })
+                    const tdMoreInfo = this.createElement('div', { className: 'td-info' }, moreInfoBtn)
+                    const tr = this.createElement('div', { className: 'tr' }, tdName, tdUsername, tdEmail, tdCompany, tdMoreInfo)
+
+                    moreInfoBtn.addEventListener('click', (event) => {
+                        dropdown.showDropdownMenu(event, 'onlyLinks')
+                    })
 
                     this.usersTable.appendChild(tr)
 
@@ -265,14 +273,82 @@ window.addEventListener('DOMContentLoaded', () => {
                 this.fixCompanyName(data)                        // Убираем ненужные поля в объекте company и оставляем только название компании
                 this.modelState.push(...data)                    // Пушим данные в стейт
                 this.removePreloaderRows(tempRows)               // Удаляем заглушки
-                this.renderUsers(this.modelState)                           // Рисуем таблицу с пользователями
+                this.renderUsers(this.modelState)                // Рисуем таблицу с пользователями
             } catch (error) {
                 console.log(error)
             }
         }
     }
 
-    const users = new Model()
+    class Dropdown {
+        constructor(model) {
+            this.model = model
+            this.isDropdown = false
+        }
+
+        get dropdown() {
+            return this._dropdown
+        }
+
+        set dropdown(value) {
+            this._dropdown = value
+        }
+
+        showDropdownMenu({ target }, props) {
+            // if (!dropdown in html) create dropdown in DOM
+            // isDropdown = true
+            //
+            // Append dropdown to document and show (add classList 'active')
+            // Add event listeners to links
+            // Click - remove classList 'active'
+
+            if (!this.dropdown) {
+                if (props === 'withSort') {
+                    const ascendLink = this.model.createElement('a', { href: '', id: 'ascend'}, 'Ascending')
+                    const descendLink = this.model.createElement('a', { href: '', id: 'descend'}, 'Descending')
+                    const orderWrap = this.model.createElement('div', { id: 'order' }, ascendLink, descendLink)
+                    const titleOrder = this.model.createElement('div', { className: 'title' }, 'Order')
+
+                    const emailLink = this.model.createElement('a', { href: '', id: 'email', className: 'selected'}, 'Email')
+                    const phoneLink = this.model.createElement('a', { href: '', id: 'phone'}, 'Phone')
+                    const addressLink = this.model.createElement('a', { href: '', id: 'address'}, 'Address')
+                    const menuWrap = this.model.createElement('div', { id: 'menu' }, emailLink, phoneLink, addressLink)
+                    const titleMenu = this.model.createElement('div', { className: 'title bordered' }, 'Show')
+
+                    const dropdownNav = this.model.createElement('div', { className: 'tip-menu__nav' }, titleOrder, orderWrap, titleMenu, menuWrap)
+                    this.dropdown = this.model.createElement('div', { className: 'tip-menu' }, dropdownNav)
+
+                    document.body.append(this.dropdown)
+                }
+            }
+            /*
+            <div class="tip-menu">
+                <div class="tip-menu__nav">
+                    <div class="title">Order</div>
+                    <div id="order">
+                        <a href="" id="ascend">Ascending</a>
+                        <a href="" id="descend">Descending</a>
+                    </div>
+                    <div class="title bordered">Show</div>
+                    <div id="menu">
+                        <a href="" id="email" class="selected">Email</a>
+                        <a href="" id="phone">Phone</a>
+                        <a href="" id="address">Address</a>
+                    </div>
+                </div>
+            </div>
+             */
+
+            const coordinate = target.getBoundingClientRect()
+
+            this.dropdown.style.left = coordinate.x + 'px'
+            this.dropdown.style.top = coordinate.y + 'px'
+        }
+    }
+
+    const model = new Model()
+    const dropdown = new Dropdown(model)
+    // model.load()
 
 })
 
