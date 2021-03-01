@@ -636,4 +636,21 @@ p, указывающая начало идентификатора продук
 // console.log(sum(-2, 0)) // -3
 // console.log(sum(-2, 2)) // 0
 
-
+/* Рекурсия: реализация метода flat */
+// const multiArr = [1, [1, 2, [3, 4]], [2, 4], 5] // [1, 1, 2, 3, 4, 2, 4]
+// function flatDeep(multiArr) {
+//     let arr = []
+//     multiArr.forEach(el => {
+//         if (Array.isArray(el)) {
+//             arr = [...arr, ...flatDeep(el)]
+//         } else {
+//             arr = [...arr, el]
+//         }
+//     })
+//     return arr
+//
+//     // return multiArr.reduce((acc, val) => {
+//     //     return acc.concat((Array.isArray(val) ? flatDeep(val) : val))
+//     // }, [])
+// }
+// console.log(flatDeep(multiArr))
