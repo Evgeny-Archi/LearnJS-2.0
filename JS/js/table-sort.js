@@ -295,14 +295,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         showDropdownMenu({ target }, props) {
-            // if (!dropdown in html) create dropdown in DOM
-            // isDropdown = true
-            //
-            // Append dropdown to document and show (add classList 'active')
-            // Add event listeners to links
-            // Click - remove classList 'active'
-
-            if (!this.dropdown) {
+            if (!this.isDropdown) {
                 if (props === 'withSort') {
                     const ascendLink = this.model.createElement('a', { href: '', id: 'ascend'}, 'Ascending')
                     const descendLink = this.model.createElement('a', { href: '', id: 'descend'}, 'Descending')
@@ -319,25 +312,18 @@ window.addEventListener('DOMContentLoaded', () => {
                     this.dropdown = this.model.createElement('div', { className: 'tip-menu' }, dropdownNav)
 
                     document.body.append(this.dropdown)
+                } else if (props === 'onlyLinks') {
+                    const aboutLink = this.model.createElement('a', { href: '', id: 'about'}, 'About')
+                    const removeLink = this.model.createElement('a', { href: '', id: 'remove'}, 'Remove')
+                    const menuWrap = this.model.createElement('div', { id: 'menu' }, aboutLink, removeLink)
+
+                    const dropdownNav = this.model.createElement('div', { className: 'tip-menu__nav' }, menuWrap)
+                    this.dropdown = this.model.createElement('div', { className: 'tip-menu' }, dropdownNav)
+
+                    document.body.append(this.dropdown)
                 }
+                this.isDropdown = true
             }
-            /*
-            <div class="tip-menu">
-                <div class="tip-menu__nav">
-                    <div class="title">Order</div>
-                    <div id="order">
-                        <a href="" id="ascend">Ascending</a>
-                        <a href="" id="descend">Descending</a>
-                    </div>
-                    <div class="title bordered">Show</div>
-                    <div id="menu">
-                        <a href="" id="email" class="selected">Email</a>
-                        <a href="" id="phone">Phone</a>
-                        <a href="" id="address">Address</a>
-                    </div>
-                </div>
-            </div>
-             */
 
             const coordinate = target.getBoundingClientRect()
 
@@ -352,7 +338,26 @@ window.addEventListener('DOMContentLoaded', () => {
 
 })
 
+/* Dropdown template
 /*
+      <div class="tip-menu">
+          <div class="tip-menu__nav">
+             <div class="title">Order</div>
+             <div id="order">
+               <a href="" id="ascend">Ascending</a>
+             <a href="" id="descend">Descending</a>
+           </div>
+            <div class="title bordered">Show</div>
+            <div id="menu">
+               <a href="" id="email" class="selected">Email</a>
+               <a href="" id="phone">Phone</a>
+              <a href="" id="address">Address</a>
+          </div>
+        </div>
+     </div>
+ */
+
+/* Row template
 <div class="tr">
  <div class="td">
          <span class="name-icon" style="background: ${this.colors[this.getRandomValue(0, this.colors.length)]};">${this.getInitials(user.name)}</span>${user.name}
