@@ -1,4 +1,4 @@
-import image from './assets/image.png'
+import image from './assets/image.jpg'
 import {TitleBlock, TextBlock, ColumnsBlock, ImageBlock} from './classes/block'
 
 const text = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est, laborum.'
