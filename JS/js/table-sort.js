@@ -338,6 +338,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 })
 
+
 /* Dropdown template
 /*
       <div class="tip-menu">
