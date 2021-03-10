@@ -1,4 +1,7 @@
-import { foo } from './module/test'
+import {Model} from './module/model'
+import {View} from './module/view'
+import {Controller} from './module/controller'
 
-console.log('index')
-foo()
+const model = new Model()
+const view = new View()
+const controller = new Controller(model, view)
