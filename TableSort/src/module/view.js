@@ -15,6 +15,9 @@ export class View extends EventEmitter {
         this.filterInput = document.querySelector('.search-input')
 
         this.loadButton.addEventListener('click', this.getUsers.bind(this))
+        this.filterInput.addEventListener('input', this.handlerFilter.bind(this))
+        this.sortUserBtn.addEventListener('click', this.handlerSort.bind(this))
+        this.sortCompanyBtn.addEventListener('click', this.handlerSort.bind(this))
 
         this.setDisabledButtons(true) // Отключаем кнопки пока не загружены данные
     }
@@ -96,5 +99,45 @@ export class View extends EventEmitter {
     setNodesToModelState() {
         const tempNodes = this.usersWrap.querySelectorAll('.tr')
         this.emit('setNodes', tempNodes)
+    }
+
+    handlerFilter(event) {
+        const filter = event.target.value.toLowerCase()
+        this.emit('filter', {filter, inputType: event.inputType})
+    }
+
+    filterRow(filterData, inputType) {
+        const userNameSpan = this.usersWrap.querySelectorAll('.js-user') // Получаем ячейки с именами
+
+        if (inputType === 'deleteContentBackward') {                  // Если удаляем символы, то добавляем юзеров по новым отфильтрованным данным
+            filterData.forEach(user => {
+                this.usersWrap.appendChild(user.node)
+            })
+        } else {
+            const filteredNames = filterData.map(user => user.name)   // Получаем имена из объектов массива
+
+            userNameSpan.forEach(span => {
+                const userName = span.textContent                     // Получаем имя из ячейки
+                if (!filteredNames.includes(userName)) {              // Если имени из ячейки нет в отфильтрованных данных, то удаляем
+                    span.parentNode.parentNode.remove()
+                }
+            })
+        }
+    }
+
+    handlerSort({target}) {
+        const order = target.classList.contains('ascend') ? 'ascend' : 'descend'   // Смотрим направление сортировки
+        if (order === 'ascend') {
+            target.classList.remove('ascend')
+        } else {
+            target.classList.add('ascend')
+        }
+        this.emit('sort', {target, order})
+    }
+
+    sortRow(sortedData) {
+        sortedData.forEach(user => {                    // Расставляем строки в таблице по отсортированным данным
+            this.usersWrap.appendChild(user.node)
+        })
     }
 }
