@@ -4,6 +4,7 @@ export class Controller {
         this.view = view
 
         view.on('loadUsers', this.loadUsers.bind(this))
+        view.on('setNodes', this.setNodesToModelState.bind(this))
     }
 
     loadUsers() {
@@ -17,6 +18,10 @@ export class Controller {
             .catch(error => {
                 this.view.showError(error)
             })
+    }
+
+    setNodesToModelState(tempNodes) {
+        this.model.setNodes(tempNodes)
     }
 
 }

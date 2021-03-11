@@ -31,6 +31,11 @@ export class Model extends EventEmitter {
         } catch(error) {
             throw new Error(error)
         }
+    }
 
+    setNodes(tempNodes) {
+        this.modelState.forEach((item, i) => {
+            item.node = tempNodes[i]
+        })
     }
 }
