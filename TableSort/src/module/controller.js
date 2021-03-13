@@ -1,12 +1,15 @@
 export class Controller {
-    constructor(model, view) {
+    constructor(model, view, popup) {
         this.model = model
         this.view = view
+        this.popup = popup
 
         view.on('loadUsers', this.loadUsers.bind(this))
         view.on('setNodes', this.setNodesToModelState.bind(this))
         view.on('filter', this.filtering.bind(this))
         view.on('sort', this.sorting.bind(this))
+
+        // popup.on('show-popup', () => console.log('show popup'))
     }
 
     loadUsers() {
