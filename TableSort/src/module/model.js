@@ -69,7 +69,7 @@ export class Model extends EventEmitter {
                 value = 'email'
                 break
             case 'company-btn':
-                value = `company`
+                value = 'company'
                 break
         }
 

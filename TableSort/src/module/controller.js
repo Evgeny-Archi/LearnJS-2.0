@@ -8,8 +8,9 @@ export class Controller {
         view.on('setNodes', this.setNodesToModelState.bind(this))
         view.on('filter', this.filtering.bind(this))
         view.on('sort', this.sorting.bind(this))
+        view.on('showPopup', this.showPopup.bind(this))
 
-        // popup.on('show-popup', () => console.log('show popup'))
+        popup.on('changeContactInfo', this.changeContacts.bind(this))
     }
 
     loadUsers() {
@@ -29,7 +30,7 @@ export class Controller {
         this.model.setNodes(tempNodes)
     }
 
-    filtering({ filter, inputType }) {
+    filtering({filter, inputType}) {
         if (!this.model.modelState.length) return
         const filterData = this.model.filtering(filter)     // Получаем отфильтрованные данные
         this.view.filterRow(filterData, inputType)          // Передаем их представлению и отрисовываем строки по фильтру
@@ -39,5 +40,13 @@ export class Controller {
         const sortedData = this.model.sorting(target)
         if (order === 'ascend') sortedData.reverse()
         this.view.sortRow(sortedData)
+    }
+
+    showPopup(event) {
+        this.popup.show(event, this.popup.popupInfo)
+    }
+
+    changeContacts(id) {
+        console.log(id)
     }
 }

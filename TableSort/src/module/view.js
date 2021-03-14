@@ -15,10 +15,6 @@ export class View extends EventEmitter {
         this.filterInput = document.querySelector('.search-input')
 
         this.loadButton.addEventListener('click', this.getUsers.bind(this))
-        this.filterInput.addEventListener('input', this.handlerFilter.bind(this))
-        this.sortUserBtn.addEventListener('click', this.handlerSort.bind(this))
-        this.sortCompanyBtn.addEventListener('click', this.handlerSort.bind(this))
-
         this.setDisabledButtons(true) // Отключаем кнопки пока не загружены данные
     }
 
@@ -27,6 +23,15 @@ export class View extends EventEmitter {
         this.sortUserBtn.disabled = bool
         this.sortEmailBtn.disabled = bool
         this.sortCompanyBtn.disabled = bool
+    }
+
+    setEventListeners() {
+        this.filterInput.addEventListener('input', this.handlerFilter.bind(this))
+        this.sortUserBtn.addEventListener('click', this.handlerSort.bind(this))
+        this.sortCompanyBtn.addEventListener('click', this.handlerSort.bind(this))
+
+        this.moreInfoBtn = document.querySelectorAll('.more-info-btn')
+        this.moreInfoBtn.forEach(item => item.addEventListener('click', (event) => this.emit('showPopup', event)))
     }
 
     getUsers(e) {
@@ -94,6 +99,7 @@ export class View extends EventEmitter {
         })
 
         this.setNodesToModelState() // Добавляем ссылку на узел DOM элемента в модель
+        this.setEventListeners()
     }
 
     setNodesToModelState() {
