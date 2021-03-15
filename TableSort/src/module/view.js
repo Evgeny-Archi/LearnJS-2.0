@@ -1,4 +1,4 @@
-import {EventEmitter} from './utils'
+import {EventEmitter, isObject} from './utils'
 
 export class View extends EventEmitter {
     constructor() {
@@ -9,9 +9,9 @@ export class View extends EventEmitter {
         this.userRow = document.querySelector('#user-row')        // Шаблон пользователя
         this.colors = ['#e4e7eb', '#fae2e2', '#fae3cd', '#fbe6a2', '#d2eef3', '#d4eee2', '#eae7f8']
         // Кнопки фильтра и сортировки
-        this.sortUserBtn = document.getElementById('user-btn')
+        this.sortUserBtn = document.getElementById('username')
         this.sortEmailBtn = document.getElementById('email-btn')
-        this.sortCompanyBtn = document.getElementById('company-btn')
+        this.sortCompanyBtn = document.getElementById('company')
         this.filterInput = document.querySelector('.search-input')
 
         this.loadButton.addEventListener('click', this.getUsers.bind(this))
@@ -138,12 +138,20 @@ export class View extends EventEmitter {
         } else {
             target.classList.add('ascend')
         }
-        this.emit('sort', {target, order})
+        this.emit('sort', {target: target.id, order})
     }
 
     sortRow(sortedData) {
         sortedData.forEach(user => {                    // Расставляем строки в таблице по отсортированным данным
             this.usersWrap.appendChild(user.node)
+        })
+    }
+
+    changeContactList(typeContact, id) {
+        this.sortEmailBtn.textContent = id
+        const contactsCell = this.usersWrap.querySelectorAll('.js-contact')
+        contactsCell.forEach((item, i) => {
+            item.textContent = isObject(typeContact[i]) ? (typeContact[i].city + ', ' + typeContact[i].street) : typeContact[i]
         })
     }
 }

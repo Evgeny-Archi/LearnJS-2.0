@@ -1,4 +1,4 @@
-import {load, EventEmitter} from './utils'
+import {load, EventEmitter, isObject} from './utils'
 
 export class Model extends EventEmitter {
     constructor() {
@@ -59,28 +59,20 @@ export class Model extends EventEmitter {
     sorting(target) {
         // Смотрим есть ли отфильтрованные данные, если есть, то сортировку делаем по ним
         const sortedData = (this.filteredData) ? this.filteredData : this.modelState
-        let value = null
-
-        switch(target.id) {
-            case 'user-btn':
-                value = 'username'
-                break
-            case 'email-btn':
-                value = 'email'
-                break
-            case 'company-btn':
-                value = 'company'
-                break
-        }
 
         sortedData.sort((a, b) => {
-            a = a[value].trim().toLowerCase()
-            b = b[value].trim().toLowerCase()
+            a = isObject(a[target]) ? a[target].city.trim().toLowerCase() : a[target].trim().toLowerCase()
+            b = isObject(b[target]) ? b[target].city.trim().toLowerCase() : b[target].trim().toLowerCase()
             if (a > b) return 1
             if (a < b) return -1
             return 0
         })
 
         return sortedData
+    }
+
+    getContacts(id) {
+        const users = (this.filteredData) ? this.filteredData : this.modelState
+        return users.map(user => user[id])
     }
 }

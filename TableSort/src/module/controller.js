@@ -11,6 +11,7 @@ export class Controller {
         view.on('showPopup', this.showPopup.bind(this))
 
         popup.on('changeContactInfo', this.changeContacts.bind(this))
+        popup.on('sort', this.sorting.bind(this))
     }
 
     loadUsers() {
@@ -47,6 +48,7 @@ export class Controller {
     }
 
     changeContacts(id) {
-        console.log(id)
+        const typeContact = this.model.getContacts(id)
+        this.view.changeContactList(typeContact, id)
     }
 }

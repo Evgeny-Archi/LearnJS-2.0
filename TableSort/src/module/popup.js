@@ -10,6 +10,10 @@ export class Popup extends EventEmitter {
         this.popupInfo = this.popupTemplateInfo.querySelector('.tip-menu')
         this.targetId = null    // Нужен для проверки повторного нажатия на кнопку (сравнения по id ранее нажатой кнопки и нажатой в текущий момент)
         this.isOpen = false     // Нужен для проверки перед закрытием меню, если нажатие произошло по той же кнопке
+        this.selectedContact = 'email' // Сохраняем выбранный контакт (email, address, phone) для передачу на сортировку
+
+        this.popupContacts.querySelector('#order').addEventListener('click', this.sortContacts.bind(this))
+        this.popupContacts.querySelector('#menu').addEventListener('click', this.changeContacts.bind(this))
 
         // Открываем меню и передаем фрагмент DOM для его отрисовки
         this.sortEmailBtn.addEventListener('click', (event) => this.show(event, this.popupContacts))
@@ -40,8 +44,6 @@ export class Popup extends EventEmitter {
         
         document.body.append(target)
         this.isOpen = true
-
-        this.setEventListeners(target)
     }
 
     close(event) {
@@ -52,10 +54,11 @@ export class Popup extends EventEmitter {
         }
     }
 
+    // Получаем координаты клика
     getCoordinate(event, target) {
         const coordinate = event.target.getBoundingClientRect()
-        coordinate.y += 26
-        if (target.classList.contains('popup-info')) {
+        coordinate.y += 26                                  // Делаем отступ сверху
+        if (target.classList.contains('popup-info')) {      // Если это боковое меню, то отодвигаем влево, внутрь таблицы 
             target.style.left = coordinate.x - 170 + 'px'
             target.style.top = coordinate.y + 'px'
         } else {
@@ -64,30 +67,38 @@ export class Popup extends EventEmitter {
         }
     }
 
-    setEventListeners(target) {
-        if (target.classList.contains('popup-info')) {
-            target.querySelector('#more-info').addEventListener('click', () => console.log('more info'))
-            target.querySelector('#delete').addEventListener('click', () => console.log('delete'))
-        } else {
-            target.querySelector('#order').addEventListener('click', (event) => this.sort(event))
-            target.querySelector('#menu').addEventListener('click', (event) => this.changeContacts(event))
-        }
-    }
-
-    sort(event) {
-        event.preventDefault()
-        console.log(event.target.id)
-    }
-
-    changeContacts(event) {
-        event.preventDefault()
+    setMarker(event) {
         event.target.parentNode.querySelectorAll('a').forEach(link => {
             if (link.classList.contains('selected')) {
                 link.classList.remove('selected')
             }
         })
-
         event.target.classList.add('selected')
+    }
+
+    sortContacts(event) {
+        event.preventDefault()
+        // Ставим маркер выбранного пункта
+        this.setMarker(event)
+
+        const order = event.target.id
+
+        if (order === 'ascend') {
+            this.sortEmailBtn.classList.add('ascend')
+        } else {
+            this.sortEmailBtn.classList.remove('ascend')
+        }
+
+        this.emit('sort', {target: this.selectedContact, order})
+    }
+
+    changeContacts(event) {
+        event.preventDefault()
+        // Ставим маркер выбранного пункта
+        this.setMarker(event)
+        
+        // Сохраняем выбранный контакт (email, phone, address)
+        this.selectedContact = event.target.id
 
         this.emit('changeContactInfo', event.target.id)
     }
