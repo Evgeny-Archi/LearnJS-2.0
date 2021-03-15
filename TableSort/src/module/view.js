@@ -100,6 +100,7 @@ export class View extends EventEmitter {
 
         this.setNodesToModelState() // Добавляем ссылку на узел DOM элемента в модель
         this.setEventListeners()
+        console.log(data)
     }
 
     setNodesToModelState() {
