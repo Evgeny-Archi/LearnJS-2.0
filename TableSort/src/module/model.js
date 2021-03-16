@@ -1,9 +1,10 @@
-import {load, EventEmitter, isObject} from './utils'
+import {load, EventEmitter, isObject, getRandomValue} from './utils'
 
 export class Model extends EventEmitter {
     constructor() {
         super()
         this.state = []
+        this.colors = ['#e4e7eb', '#fae2e2', '#fae3cd', '#fbe6a2', '#d2eef3', '#d4eee2', '#eae7f8']
     }
 
     get modelState() {
@@ -29,6 +30,7 @@ export class Model extends EventEmitter {
     fixCompanyName(data) {
         data.forEach(user => {
             user.company = user.company.name
+            user.color = this.colors[getRandomValue(0, this.colors.length)]
         })
     }
 

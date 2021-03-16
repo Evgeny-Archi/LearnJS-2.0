@@ -1,4 +1,4 @@
-import {EventEmitter, isObject} from './utils'
+import {EventEmitter, isObject, getRandomValue, getInitials} from './utils'
 
 export class View extends EventEmitter {
     constructor() {
@@ -7,7 +7,6 @@ export class View extends EventEmitter {
         this.loadButton = document.querySelector('#load-button')
         this.preloader = document.querySelector('#fake-user-row') // Шаблон прелоадера
         this.userRow = document.querySelector('#user-row')        // Шаблон пользователя
-        this.colors = ['#e4e7eb', '#fae2e2', '#fae3cd', '#fbe6a2', '#d2eef3', '#d4eee2', '#eae7f8']
         // Кнопки фильтра и сортировки
         this.sortUserBtn = document.getElementById('username')
         this.sortEmailBtn = document.getElementById('email-btn')
@@ -40,10 +39,6 @@ export class View extends EventEmitter {
         this.emit('loadUsers')
     }
 
-    getRandomValue(min, max) {
-        return Math.floor(Math.random() * (max - min) + min)
-    }
-
     setPreloader() {
         // Создаем обертку для прелоадера
         const preloaderWrap = document.createElement('div')
@@ -51,7 +46,7 @@ export class View extends EventEmitter {
 
         // Находим каждую ячейку в таблице прелоадера для задания рандомной ширины
         const columns = Array.from(this.preloader.content.querySelectorAll('.td-fake'))
-        columns.map(item => item.style.width = this.getRandomValue(20,100) + '%')
+        columns.map(item => item.style.width = getRandomValue(20,100) + '%')
 
         // Находим аватарки и присваиваем им задний фон
         const avatars = Array.from(this.preloader.content.querySelectorAll('.name-icon-fake'))
@@ -74,10 +69,6 @@ export class View extends EventEmitter {
         this.usersWrap.textContent = error
     }
 
-    getInitials(name) {
-        return name.split(' ').slice(0, 2).map(item => item.charAt(0).toUpperCase()).join('')
-    }
-
     renderUsers(data) {
         if (!data.length) {
             this.usersWrap.textContent = 'No users'
@@ -86,8 +77,8 @@ export class View extends EventEmitter {
 
         data.map(user => {
             const initials = this.userRow.content.querySelector('.name-icon')
-            initials.textContent = this.getInitials(user.name)
-            initials.style.background = this.colors[this.getRandomValue(0, this.colors.length)]
+            initials.textContent = getInitials(user.name)
+            initials.style.background = user.color
             this.userRow.content.querySelector('.js-user').textContent = user.name
             this.userRow.content.querySelector('.js-username').textContent = user.username
             this.userRow.content.querySelector('.js-contact').textContent = user.email
@@ -100,6 +91,7 @@ export class View extends EventEmitter {
 
         this.setNodesToModelState() // Добавляем ссылку на узел DOM элемента в модель
         this.setEventListeners()
+        console.log(data)
     }
 
     setNodesToModelState() {

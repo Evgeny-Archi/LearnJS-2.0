@@ -32,3 +32,11 @@ export class EventEmitter {
 export function isObject(obj) {
     return obj === Object(obj)
 }
+
+export function getRandomValue(min, max) {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+
+export function getInitials(name) {
+    return name.split(' ').slice(0, 2).map(item => item.charAt(0).toUpperCase()).join('')
+}
