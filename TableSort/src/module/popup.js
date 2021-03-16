@@ -11,16 +11,17 @@ export class Popup extends EventEmitter {
         this.targetId = null    // Нужен для проверки повторного нажатия на кнопку (сравнения по id ранее нажатой кнопки и нажатой в текущий момент)
         this.isOpen = false     // Нужен для проверки перед закрытием меню, если нажатие произошло по той же кнопке
         this.selectedContact = 'email' // Сохраняем выбранный контакт (email, address, phone) для передачу на сортировку
+        this.boundClose = this.close.bind(this) // Сохраняем фу-цию для добавлению к обработчику событий
 
         this.popupContacts.querySelector('#order').addEventListener('click', this.sortContacts.bind(this))
         this.popupContacts.querySelector('#menu').addEventListener('click', this.changeContacts.bind(this))
 
+        this.popupInfo.querySelector('#more-info').addEventListener('click', this.showUserInfo.bind(this))
+
         // Открываем меню и передаем фрагмент DOM для его отрисовки
         this.sortEmailBtn.addEventListener('click', (event) => this.show(event, this.popupContacts))
         // Закрываем уже открытые меню перед отрисовкой
-        document.body.addEventListener('closeOpenedPopup', (event) => this.close(event))
-        // Закрываем меню при нажатии на свободную область
-        document.body.addEventListener('click', (event) => this.close(event))
+        document.body.addEventListener('closeOpenedPopup', this.boundClose)
     }
 
     show(event, target) {
@@ -44,13 +45,18 @@ export class Popup extends EventEmitter {
         
         document.body.append(target)
         this.isOpen = true
+
+        // Вешаем обработчик для закрытия меню при нажатии на свободную область
+        document.body.addEventListener('click', this.boundClose)
     }
 
     close(event) {
         const target = document.querySelector('.tip-menu') || undefined
-        if (target && !event.target.closest('.tip-menu')) {     // Если меню открыто (обработано querySelector) и не нажато на само меню, то удаляем
+        
+        if (target && !event.target.closest('.title')) {     // Если меню открыто (обработано querySelector) и не нажато на само меню, то удаляем
             target.remove()
             this.isOpen = false
+            document.body.removeEventListener('click', this.boundClose)
         }
     }
 
@@ -101,5 +107,11 @@ export class Popup extends EventEmitter {
         this.selectedContact = event.target.id
 
         this.emit('changeContactInfo', event.target.id)
+        this.boundClose(event)
+    }
+
+    showUserInfo(event) {
+        event.preventDefault()
+        document.querySelector('.modal-wrap').style.display = 'block'
     }
 }
