@@ -40,3 +40,18 @@ export function getRandomValue(min, max) {
 export function getInitials(name) {
     return name.split(' ').slice(0, 2).map(item => item.charAt(0).toUpperCase()).join('')
 }
+
+export function cacheDecorator(func) {
+    const cache = new Map()
+
+    return function(id) {
+        if (cache.has(id)) {
+            return cache.get(id)
+        }
+
+        const result = func.call(this, id)
+
+        cache.set(id, result)
+        return result
+    }
+}

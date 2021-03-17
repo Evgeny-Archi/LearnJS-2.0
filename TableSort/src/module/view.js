@@ -30,7 +30,7 @@ export class View extends EventEmitter {
         this.sortCompanyBtn.addEventListener('click', this.handlerSort.bind(this))
 
         this.moreInfoBtn = document.querySelectorAll('.more-info-btn')
-        this.moreInfoBtn.forEach(item => item.addEventListener('click', (event) => this.emit('showPopup', event)))
+        this.moreInfoBtn.forEach(item => item.addEventListener('click', (event) => this.emit('showPopup', {event, id: item.id})))
     }
 
     getUsers(e) {
@@ -91,7 +91,6 @@ export class View extends EventEmitter {
 
         this.setNodesToModelState() // Добавляем ссылку на узел DOM элемента в модель
         this.setEventListeners()
-        console.log(data)
     }
 
     setNodesToModelState() {

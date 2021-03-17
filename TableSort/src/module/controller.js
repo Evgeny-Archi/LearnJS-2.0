@@ -1,8 +1,11 @@
+import {cacheDecorator} from './utils'
+
 export class Controller {
-    constructor(model, view, popup) {
+    constructor(model, view, popup, modal) {
         this.model = model
         this.view = view
         this.popup = popup
+        this.modal = modal
 
         view.on('loadUsers', this.loadUsers.bind(this))
         view.on('setNodes', this.setNodesToModelState.bind(this))
@@ -12,6 +15,7 @@ export class Controller {
 
         popup.on('changeContactInfo', this.changeContacts.bind(this))
         popup.on('sort', this.sorting.bind(this))
+        popup.on('showModal', this.showModal.bind(this))
     }
 
     loadUsers() {
@@ -43,12 +47,18 @@ export class Controller {
         this.view.sortRow(sortedData)
     }
 
-    showPopup(event) {
-        this.popup.show(event, this.popup.popupInfo)
+    showPopup({event, id}) {
+        this.popup.show(event, this.popup.popupInfo, id)
     }
 
     changeContacts(id) {
         const typeContact = this.model.getContacts(id)
         this.view.changeContactList(typeContact, id)
+    }
+
+    showModal(id) {
+        this.model.getUserById = cacheDecorator(this.model.getUserById)
+        const user = this.model.getUserById(id)
+        this.modal.show(user)
     }
 }

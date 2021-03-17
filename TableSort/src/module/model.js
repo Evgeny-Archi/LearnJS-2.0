@@ -77,4 +77,8 @@ export class Model extends EventEmitter {
         const users = (this.filteredData) ? this.filteredData : this.modelState
         return users.map(user => user[id])
     }
+
+    getUserById(id) {
+        return this.modelState.find(user => user.id === Number(id))
+    }
 }

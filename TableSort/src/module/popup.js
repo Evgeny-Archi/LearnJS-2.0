@@ -11,12 +11,16 @@ export class Popup extends EventEmitter {
         this.targetId = null    // Нужен для проверки повторного нажатия на кнопку (сравнения по id ранее нажатой кнопки и нажатой в текущий момент)
         this.isOpen = false     // Нужен для проверки перед закрытием меню, если нажатие произошло по той же кнопке
         this.selectedContact = 'email' // Сохраняем выбранный контакт (email, address, phone) для передачу на сортировку
-        this.boundClose = this.close.bind(this) // Сохраняем фу-цию для добавлению к обработчику событий
+        this.userId = null      // Нужен для сохранения id пользователя при нажатии на боковое меню
+        this.boundClose = this.close.bind(this) // Сохраняем фу-цию для добавления к обработчику событий
 
+        // Обработчики на меню дополнительных контактов и сортировки (Email btn)
         this.popupContacts.querySelector('#order').addEventListener('click', this.sortContacts.bind(this))
         this.popupContacts.querySelector('#menu').addEventListener('click', this.changeContacts.bind(this))
 
+        // Обработчики на боковое меню для каждого юзера (... btn)
         this.popupInfo.querySelector('#more-info').addEventListener('click', this.showUserInfo.bind(this))
+        this.popupInfo.querySelector('#delete').addEventListener('click', this.deleteUser.bind(this))
 
         // Открываем меню и передаем фрагмент DOM для его отрисовки
         this.sortEmailBtn.addEventListener('click', (event) => this.show(event, this.popupContacts))
@@ -24,19 +28,19 @@ export class Popup extends EventEmitter {
         document.body.addEventListener('closeOpenedPopup', this.boundClose)
     }
 
-    show(event, target) {
+    show(event, target, id) {
         event.stopPropagation() // Отменяем всплытие, чтобы не срабатывало событие клик на документе
         
         if (this.targetId === event.target.id && this.isOpen) { // Если меню открыто и клик по той же кнопке, то просто закрываем
             this.close(event)
         } else {
-            this.open(event, target)
+            this.open(event, target, id)
         }
         
         this.targetId = event.target.id     // Присваиваем id нажатой кнопки для последующего сравнения с id следующего нажатия
     }
 
-    open(event, target) {
+    open(event, target, id) {
         // Создаем кастомное событие, чтобы удалить уже открытое меню и не дублировать его (при нажатии на email btn, а потом на more info btn)
         const closeOpenedPopupEvt = new CustomEvent('closeOpenedPopup')
         document.body.dispatchEvent(closeOpenedPopupEvt)
@@ -45,6 +49,11 @@ export class Popup extends EventEmitter {
         
         document.body.append(target)
         this.isOpen = true
+
+        // Добавляем id юзера к выпадающему сбоку меню. id приходит из View
+        if (target.classList.contains('popup-info')) {
+            this.userId = id
+        }
 
         // Вешаем обработчик для закрытия меню при нажатии на свободную область
         document.body.addEventListener('click', this.boundClose)
@@ -112,6 +121,10 @@ export class Popup extends EventEmitter {
 
     showUserInfo(event) {
         event.preventDefault()
-        document.querySelector('.modal-wrap').style.display = 'block'
+        this.emit('showModal', this.userId)
+    }
+
+    deleteUser(event) {
+        event.preventDefault()
     }
 }
