@@ -19,6 +19,7 @@ export class Popup extends EventEmitter {
         this.popupContacts.querySelector('#menu').addEventListener('click', this.changeContacts.bind(this))
 
         // Обработчики на боковое меню для каждого юзера (... btn)
+        this.popupInfo.querySelector('#edit').addEventListener('click', this.editUser.bind(this))
         this.popupInfo.querySelector('#more-info').addEventListener('click', this.showUserInfo.bind(this))
         this.popupInfo.querySelector('#delete').addEventListener('click', this.deleteUser.bind(this))
 
@@ -116,7 +117,11 @@ export class Popup extends EventEmitter {
         this.selectedContact = event.target.id
 
         this.emit('changeContactInfo', event.target.id)
-        this.boundClose(event)
+    }
+
+    editUser(event) {
+        event.preventDefault()
+        this.emit('handlerEditUser', this.userId)
     }
 
     showUserInfo(event) {
@@ -126,5 +131,9 @@ export class Popup extends EventEmitter {
 
     deleteUser(event) {
         event.preventDefault()
+        if (!confirm('Вы уверены, что хотите удалить пользователя?')) {
+            return
+        }
+        this.emit('deleteUser', this.userId)
     }
 }

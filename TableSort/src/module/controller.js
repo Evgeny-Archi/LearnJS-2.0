@@ -16,6 +16,8 @@ export class Controller {
         popup.on('changeContactInfo', this.changeContacts.bind(this))
         popup.on('sort', this.sorting.bind(this))
         popup.on('showModal', this.showModal.bind(this))
+        popup.on('deleteUser', this.deleteUser.bind(this))
+        popup.on('handlerEditUser', this.handlerEditUser.bind(this))
     }
 
     loadUsers() {
@@ -56,9 +58,23 @@ export class Controller {
         this.view.changeContactList(typeContact, id)
     }
 
+    handlerEditUser(id) {
+        const userNode = this.model.modelState[this.model.getIndexById(id)].node
+        this.view.setEditingRow(userNode)
+    }
+
     showModal(id) {
         this.model.getUserById = cacheDecorator(this.model.getUserById)
         const user = this.model.getUserById(id)
         this.modal.show(user)
+    }
+
+    deleteUser(id) {
+        try {
+            const deleteNode = this.model.delete(id)
+            this.view.deleteUserRow(deleteNode)
+        } catch(error) {
+            alert(error)
+        }
     }
 }

@@ -7,13 +7,17 @@ export class View extends EventEmitter {
         this.loadButton = document.querySelector('#load-button')
         this.preloader = document.querySelector('#fake-user-row') // Шаблон прелоадера
         this.userRow = document.querySelector('#user-row')        // Шаблон пользователя
+        this.backdropTemplate = document.getElementById('backdrop').content.cloneNode(true)
+        this.backdrop = this.backdropTemplate.querySelector('.backdrop')
         // Кнопки фильтра и сортировки
         this.sortUserBtn = document.getElementById('username')
         this.sortEmailBtn = document.getElementById('email-btn')
         this.sortCompanyBtn = document.getElementById('company')
         this.filterInput = document.querySelector('.search-input')
 
-        this.loadButton.addEventListener('click', this.getUsers.bind(this))
+        this.boundGetUsers = this.getUsers.bind(this)
+
+        this.loadButton.addEventListener('click', this.boundGetUsers)
         this.setDisabledButtons(true) // Отключаем кнопки пока не загружены данные
     }
 
@@ -35,7 +39,10 @@ export class View extends EventEmitter {
 
     getUsers(e) {
         e.preventDefault()
-        e.target.disabled = true
+        e.target.disabled = true                                            // Отключаем кнопку
+        this.loadButton.removeEventListener('click', this.boundGetUsers)    // Удаляем обработчик
+        this.usersWrap.textContent = ''                                     // Очищаем таблицу, если уже есть строки пользователей (обновить список)
+
         this.emit('loadUsers')
     }
 
@@ -90,10 +97,10 @@ export class View extends EventEmitter {
         })
 
         this.setNodesToModelState() // Добавляем ссылку на узел DOM элемента в модель
-        this.setEventListeners()
+        this.setEventListeners()    // Назначаем обработчики на кнопки
     }
 
-    setNodesToModelState() {
+    setNodesToModelState() {        // Добавляем ссылку на узел DOM в стейт модели для последующего обращения при удалении или сортировки
         const tempNodes = this.usersWrap.querySelectorAll('.tr')
         this.emit('setNodes', tempNodes)
     }
@@ -124,7 +131,7 @@ export class View extends EventEmitter {
 
     handlerSort({target}) {
         const order = target.classList.contains('ascend') ? 'ascend' : 'descend'   // Смотрим направление сортировки
-        if (order === 'ascend') {
+        if (order === 'ascend') {                                                  // Рисуем стрелочки рядом с кнопкой
             target.classList.remove('ascend')
         } else {
             target.classList.add('ascend')
@@ -138,11 +145,33 @@ export class View extends EventEmitter {
         })
     }
 
-    changeContactList(typeContact, id) {
+    changeContactList(typeContact, id) {            // Изменяем контакты на выбранный из выпадающего меню
         this.sortEmailBtn.textContent = id
         const contactsCell = this.usersWrap.querySelectorAll('.js-contact')
         contactsCell.forEach((item, i) => {
+            // Если контакт - строка, выводим ее. Если объект - выбираем поля объекта (city, street)
             item.textContent = isObject(typeContact[i]) ? (typeContact[i].city + ', ' + typeContact[i].street) : typeContact[i]
         })
     }
+
+    setEditingRow(userNode) {
+        userNode.classList.add('editing')
+        document.body.append(this.backdrop)
+    }
+
+    deleteUserRow(deleteNode) {
+        this.activateLoadButton()
+
+        deleteNode.classList.add('deleting')                    // Добавляем анимацию удаления
+        deleteNode.addEventListener('animationend', () => {     // Удаляем после завершения анимации
+            deleteNode.remove()
+        })
+    }
+
+    activateLoadButton() {
+        this.loadButton.disabled = false
+        this.loadButton.textContent = 'Обновить список'
+        this.loadButton.addEventListener('click', this.boundGetUsers)
+    }
+
 }

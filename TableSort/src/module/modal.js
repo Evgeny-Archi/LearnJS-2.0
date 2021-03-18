@@ -3,6 +3,9 @@ import { EventEmitter, getInitials } from "./utils"
 export class Modal extends EventEmitter {
     constructor() {
         super()
+        this.backdropTemplate = document.getElementById('backdrop').content.cloneNode(true)
+        this.backdrop = this.backdropTemplate.querySelector('.backdrop')
+
         this.boundClose = this.close.bind(this)
     }
 
@@ -53,6 +56,7 @@ export class Modal extends EventEmitter {
     show(user) {
         const html = this.toHtml(user)
         document.body.insertAdjacentHTML('beforeend', html)
+        document.body.append(this.backdrop)
         setTimeout(() => {
             document.body.addEventListener('click', this.boundClose)
         }, 0)
@@ -62,6 +66,7 @@ export class Modal extends EventEmitter {
         const modal = document.querySelector('.modal-wrap')
         if (!event.target.closest('.modal-wrap') || event.target.classList.contains('modal_footer-close')) {
             modal.remove()
+            this.backdrop.remove()
             document.body.removeEventListener('click', this.boundClose)
         }
     }

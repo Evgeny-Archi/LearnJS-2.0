@@ -81,4 +81,19 @@ export class Model extends EventEmitter {
     getUserById(id) {
         return this.modelState.find(user => user.id === Number(id))
     }
+
+    getIndexById(id) {
+        return this.modelState.findIndex(user => user.id === Number(id))
+    }
+
+    delete(id) {
+        const index = this.getIndexById(id)
+        if (index != -1) {
+            const deleteNode = this.modelState[index].node
+            this.modelState.splice(index, 1)
+            return deleteNode
+        } else {
+            throw new Error('Sorry... User not found')
+        }
+    }
 }
