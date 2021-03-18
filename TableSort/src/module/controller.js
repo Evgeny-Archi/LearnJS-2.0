@@ -1,11 +1,12 @@
 import {cacheDecorator} from './utils'
 
 export class Controller {
-    constructor(model, view, popup, modal) {
+    constructor(model, view, popup, modal, edit) {
         this.model = model
         this.view = view
         this.popup = popup
         this.modal = modal
+        this.edit = edit
 
         view.on('loadUsers', this.loadUsers.bind(this))
         view.on('setNodes', this.setNodesToModelState.bind(this))

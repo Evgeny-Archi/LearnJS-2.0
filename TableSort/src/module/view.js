@@ -155,7 +155,19 @@ export class View extends EventEmitter {
     }
 
     setEditingRow(userNode) {
+        const coord = userNode.getBoundingClientRect()
+        // const editRow = document.createElement('div')
+        // editRow.classList.add('editing')
+        // editRow.style.top = coord.y + 'px'
+        // editRow.style.left = coord.x + 'px'
+        // editRow.style.width = coord.width + 'px'
+        // document.body.append(editRow)
+        userNode = userNode.cloneNode(true)
         userNode.classList.add('editing')
+        // userNode.style.top = coord.y + 'px'
+        // userNode.style.left = coord.x + 'px'
+        // userNode.style.width = coord.width + 'px'
+        // document.body.append(userNode)
         document.body.append(this.backdrop)
     }
 

@@ -46,7 +46,7 @@ export class Modal extends EventEmitter {
                         </div>
                     </div>
                     <div class="model_footer">
-                        <button class="modal_footer-close">Close</button>
+                        <button class="btn modal_footer-close">Close</button>
                     </div>
                 </div>
             </div>
