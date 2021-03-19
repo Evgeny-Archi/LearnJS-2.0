@@ -1,11 +1,11 @@
-import {cacheDecorator} from './utils'
+import {cacheDecorator} from './module/utils'
 
 export class Controller {
-    constructor(model, view, popup, modal, edit) {
+    constructor(model, view, popup, about, edit) {
         this.model = model
         this.view = view
         this.popup = popup
-        this.modal = modal
+        this.about = about
         this.edit = edit
 
         view.on('loadUsers', this.loadUsers.bind(this))
@@ -60,14 +60,14 @@ export class Controller {
     }
 
     handlerEditUser(id) {
-        const userNode = this.model.modelState[this.model.getIndexById(id)].node
-        this.view.setEditingRow(userNode)
+        const user = this.model.getUserById(id)
+        this.edit.show(user)
     }
 
     showModal(id) {
         this.model.getUserById = cacheDecorator(this.model.getUserById)
         const user = this.model.getUserById(id)
-        this.modal.show(user)
+        this.about.show(user)
     }
 
     deleteUser(id) {

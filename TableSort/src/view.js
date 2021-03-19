@@ -1,4 +1,4 @@
-import {EventEmitter, isObject, getRandomValue, getInitials} from './utils'
+import {EventEmitter, isObject, getRandomValue, getInitials} from './module/utils'
 
 export class View extends EventEmitter {
     constructor() {
@@ -7,8 +7,6 @@ export class View extends EventEmitter {
         this.loadButton = document.querySelector('#load-button')
         this.preloader = document.querySelector('#fake-user-row') // Шаблон прелоадера
         this.userRow = document.querySelector('#user-row')        // Шаблон пользователя
-        this.backdropTemplate = document.getElementById('backdrop').content.cloneNode(true)
-        this.backdrop = this.backdropTemplate.querySelector('.backdrop')
         // Кнопки фильтра и сортировки
         this.sortUserBtn = document.getElementById('username')
         this.sortEmailBtn = document.getElementById('email-btn')
@@ -152,23 +150,6 @@ export class View extends EventEmitter {
             // Если контакт - строка, выводим ее. Если объект - выбираем поля объекта (city, street)
             item.textContent = isObject(typeContact[i]) ? (typeContact[i].city + ', ' + typeContact[i].street) : typeContact[i]
         })
-    }
-
-    setEditingRow(userNode) {
-        const coord = userNode.getBoundingClientRect()
-        // const editRow = document.createElement('div')
-        // editRow.classList.add('editing')
-        // editRow.style.top = coord.y + 'px'
-        // editRow.style.left = coord.x + 'px'
-        // editRow.style.width = coord.width + 'px'
-        // document.body.append(editRow)
-        userNode = userNode.cloneNode(true)
-        userNode.classList.add('editing')
-        // userNode.style.top = coord.y + 'px'
-        // userNode.style.left = coord.x + 'px'
-        // userNode.style.width = coord.width + 'px'
-        // document.body.append(userNode)
-        document.body.append(this.backdrop)
     }
 
     deleteUserRow(deleteNode) {

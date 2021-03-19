@@ -1,4 +1,4 @@
-import {load, EventEmitter, isObject, getRandomValue} from './utils'
+import {load, EventEmitter, isObject, getRandomValue} from './module/utils'
 
 export class Model extends EventEmitter {
     constructor() {

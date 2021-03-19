@@ -1,56 +1,13 @@
-import { EventEmitter, getInitials } from "./utils"
+import { EventEmitter } from "./utils"
 
 export class Modal extends EventEmitter {
-    constructor() {
+    constructor(type) {
         super()
+        this.type = type // Принимаем тип модального окна (кнопки: more info, edit). Тип соответствует id DOM элемента
         this.backdropTemplate = document.getElementById('backdrop').content.cloneNode(true)
         this.backdrop = this.backdropTemplate.querySelector('.backdrop')
 
         this.boundClose = this.close.bind(this)
-    }
-
-    toHtml(user) {
-        return `
-            <div class="modal-wrap">
-                <div class="modal">
-                    <div class="modal_title">
-                        <span class="modal_title-logo" style="background: ${user.color}">${getInitials(user.name)}</span>
-                        <h2 class="modal_title-fullname">${user.name}</h2>
-                    </div>
-                    <div class="modal_content">
-                        <div class="modal_content-table">
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">id</div>
-                                <div class="modal_content-cel">${user.id}</div>
-                            </div>
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">Nickname</div>
-                                <div class="modal_content-cel">${user.username}</div>
-                            </div>
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">Email</div>
-                                <div class="modal_content-cel">${user.email}</div>
-                            </div>
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">Phone</div>
-                                <div class="modal_content-cel">${user.phone}</div>
-                            </div>
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">Address</div>
-                                <div class="modal_content-cel">${user.address.zipcode}, ${user.address.city}, ${user.address.street}</div>
-                            </div>
-                            <div class="modal_content-row">
-                                <div class="modal_content-cel">Website</div>
-                                <div class="modal_content-cel">${user.website}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="model_footer">
-                        <button class="btn modal_footer-close">Close</button>
-                    </div>
-                </div>
-            </div>
-        `
     }
 
     show(user) {
@@ -60,12 +17,13 @@ export class Modal extends EventEmitter {
         setTimeout(() => {
             document.body.addEventListener('click', this.boundClose)
         }, 0)
+        this.setEventListeners()
     }
 
     close(event) {
-        const modal = document.querySelector('.modal-wrap')
-        if (!event.target.closest('.modal-wrap') || event.target.classList.contains('modal_footer-close')) {
-            modal.remove()
+        const modal = document.getElementById(this.type)        // Ищем открытое модальное окно
+        if (event.target.classList.contains('backdrop') || event.target.id === 'close-btn') {
+            modal.remove()                                      // Удаляем открытое модальное окно
             this.backdrop.remove()
             document.body.removeEventListener('click', this.boundClose)
         }
