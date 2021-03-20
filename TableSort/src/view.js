@@ -152,6 +152,13 @@ export class View extends EventEmitter {
         })
     }
 
+    updateUserRow(user) {
+        user.node.querySelector('.js-user').textContent = user.name
+        user.node.querySelector('.js-username').textContent = user.username
+        user.node.querySelector('.js-contact').textContent = user.email
+        user.node.querySelector('.js-company').textContent = user.company
+    }
+
     deleteUserRow(deleteNode) {
         this.activateLoadButton()
 

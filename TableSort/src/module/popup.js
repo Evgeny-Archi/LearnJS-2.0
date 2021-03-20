@@ -84,11 +84,13 @@ export class Popup extends EventEmitter {
     }
 
     setMarker(event) {
+        // Перебираем ссылки в выпадающем меню и удаляем маркеры
         event.target.parentNode.querySelectorAll('a').forEach(link => {
             if (link.classList.contains('selected')) {
                 link.classList.remove('selected')
             }
         })
+        // Добавляем маркер на нажатую ссылку
         event.target.classList.add('selected')
     }
 
@@ -121,12 +123,12 @@ export class Popup extends EventEmitter {
 
     editUser(event) {
         event.preventDefault()
-        this.emit('handlerEditUser', this.userId)
+        this.emit('showEditModal', this.userId)
     }
 
     showUserInfo(event) {
         event.preventDefault()
-        this.emit('showModal', this.userId)
+        this.emit('showAboutModal', this.userId)
     }
 
     deleteUser(event) {

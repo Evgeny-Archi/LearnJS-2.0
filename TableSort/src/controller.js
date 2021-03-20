@@ -16,9 +16,11 @@ export class Controller {
 
         popup.on('changeContactInfo', this.changeContacts.bind(this))
         popup.on('sort', this.sorting.bind(this))
-        popup.on('showModal', this.showModal.bind(this))
+        popup.on('showAboutModal', this.showAboutModal.bind(this))
         popup.on('deleteUser', this.deleteUser.bind(this))
-        popup.on('handlerEditUser', this.handlerEditUser.bind(this))
+        popup.on('showEditModal', this.showEditModal.bind(this))
+
+        edit.on('saveEdit', this.editUser.bind(this))
     }
 
     loadUsers() {
@@ -26,8 +28,8 @@ export class Controller {
         const data = this.model.getUsers()              // Получаем данные пользователей
         data
             .then((result) => {
-            this.view.removePreloader(preloader)        // Удаляем анимацию загрузки
-            this.view.renderUsers(result)               // Показываем пользователей
+                this.view.removePreloader(preloader)        // Удаляем анимацию загрузки
+                this.view.renderUsers(result)               // Показываем пользователей
             })
             .catch(error => {
                 this.view.showError(error)
@@ -59,12 +61,23 @@ export class Controller {
         this.view.changeContactList(typeContact, id)
     }
 
-    handlerEditUser(id) {
+    showEditModal(id) {
         const user = this.model.getUserById(id)
         this.edit.show(user)
     }
 
-    showModal(id) {
+    editUser(data) {
+        this.edit.setPreloaderBtn()
+        const user = this.model.updateState(data)
+        user            // Получаем промис, т.к. эмулируется задержка обновления данных (ради практики)
+            .then((result) => {
+                this.view.updateUserRow(result)
+                this.edit.forceClose()
+            })
+        
+    }
+
+    showAboutModal(id) {
         this.model.getUserById = cacheDecorator(this.model.getUserById)
         const user = this.model.getUserById(id)
         this.about.show(user)

@@ -86,6 +86,24 @@ export class Model extends EventEmitter {
         return this.modelState.findIndex(user => user.id === Number(id))
     }
 
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+    // Обновление пользователя после редактирования
+    async updateState(data) {
+        // Асинхронность ради практики и эмулирования задержки при обработке данных
+        await this.sleep(500)
+        const user = this.getUserById(data.id)
+        delete data.id                      // Удаляем свойство id из переданного объекта, чтобы не заменять в state
+        Object.keys(user).map(key => {      // Перебираем ключи объекта юзер и присваиваем каждому значения из data (если не undefined)
+            if (data[key] !== undefined) {
+                user[key] = data[key]
+            }
+        })
+        return user
+    }
+
     delete(id) {
         const index = this.getIndexById(id)
         if (index != -1) {

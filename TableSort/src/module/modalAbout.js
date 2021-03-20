@@ -1,14 +1,14 @@
 import { getInitials } from "./utils"
-import {Modal} from './modal'
+import { Modal } from './modal'
 
 export class ModalAbout extends Modal {
     constructor() {
-        super('about')
+        super('about-modal')
     }
 
     toHtml(user) {
         return `
-            <div class="modal-wrap" id="about">
+            <div class="modal-wrap" id="about-modal">
                 <div class="modal">
                     <div class="modal_title">
                         <span class="modal_title-logo" style="background: ${user.color}">${getInitials(user.name)}</span>
@@ -39,6 +39,10 @@ export class ModalAbout extends Modal {
                             <div class="modal_content-row">
                                 <div class="modal_content-cel">Website</div>
                                 <div class="modal_content-cel">${user.website}</div>
+                            </div>
+                            <div class="modal_content-row">
+                                <div class="modal_content-cel">Company</div>
+                                <div class="modal_content-cel">${user.company}</div>
                             </div>
                         </div>
                     </div>
