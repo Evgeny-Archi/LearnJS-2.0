@@ -33,11 +33,15 @@ export class ModalEdit extends Modal {
         this.saveBtn.addEventListener('click', this.saveEdit.bind(this))
     }
 
+    normalize(str) {
+        return str.trim()
+    }
+
     saveEdit({ target }) {
-        const data = {}                 // Объект хранения измененных данных для передачи модели и представлению
+        const data = {}                 // Объект хранения измененных данных для передачи контроллеру
         data.id = Number(target.id)     // Сохраняем id пользователя, полученного из кнопки
         this.modal.querySelectorAll('input[type="text"]').forEach(item => {
-            data[item.id] = item.value
+            data[item.id] = this.normalize(item.value)
         })
 
         this.emit('saveEdit', data)

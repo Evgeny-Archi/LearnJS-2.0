@@ -77,6 +77,7 @@ export class View extends EventEmitter {
     renderUsers(data) {
         if (!data.length) {
             this.usersWrap.textContent = 'No users'
+            this.setDisabledButtons(true)
             return
         }
 

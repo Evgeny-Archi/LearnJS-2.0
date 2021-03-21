@@ -74,7 +74,6 @@ export class Controller {
                 this.view.updateUserRow(result)
                 this.edit.forceClose()
             })
-        
     }
 
     showAboutModal(id) {
@@ -87,6 +86,10 @@ export class Controller {
         try {
             const deleteNode = this.model.delete(id)
             this.view.deleteUserRow(deleteNode)
+            if (this.model.modelState.length === 0) {
+                // Если удалить всех пользователей, то вызываем render с пустым массивом (появляется заглушка и отключаются кнопки) 
+                this.view.renderUsers(this.model.modelState)
+            }
         } catch(error) {
             alert(error)
         }
