@@ -1,2 +1,3 @@
 # LearnJS-2.0
-Continue learn JS. More knowlege => more powerful
+Продолжаю более углубленное изучение JS
+* Практика и пет-проекты
