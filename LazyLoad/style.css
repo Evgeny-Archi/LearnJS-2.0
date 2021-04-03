@@ -72,7 +72,7 @@ a:hover {
     grid-gap: 20px;
 }
 .page__image {
-    min-height: 200px;
+    min-height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
