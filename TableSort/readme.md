@@ -13,4 +13,6 @@
 * Удаление пользователя (кнопка Delete)
 * Обновление списка пользователей
 
-`Evgeny Archi`
+`Preview`
+
+![TableSort thumbnail](./tablesort.webp)
